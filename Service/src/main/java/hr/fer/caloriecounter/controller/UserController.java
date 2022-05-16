@@ -3,7 +3,11 @@ package hr.fer.caloriecounter.controller;
 import hr.fer.caloriecounter.model.User;
 import hr.fer.caloriecounter.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.SecureRandom;
 
 @RestController
 @AllArgsConstructor
@@ -17,8 +21,8 @@ public class UserController {
         return this.userService.saveUser(user);
     }
 
-    @GetMapping("{username}")
-    public User getUser(@PathVariable String username) throws Exception {
-        return this.userService.getUser(username);
+    @GetMapping("{username}/{password}")
+    public User getUser(@PathVariable String username, @PathVariable String password) throws Exception {
+        return this.userService.getUser(username, password);
     }
 }

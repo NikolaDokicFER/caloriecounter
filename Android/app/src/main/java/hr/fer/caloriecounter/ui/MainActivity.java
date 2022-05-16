@@ -9,6 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import hr.fer.caloriecounter.R;
+import hr.fer.caloriecounter.api.login.LoginApi;
+import hr.fer.caloriecounter.api.register.RegisterApi;
+import hr.fer.caloriecounter.model.UserDetail;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     public static final String BASEURL = "http://10.0.2.2:8080/";
@@ -40,7 +48,34 @@ public class MainActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(view -> {
             if(validateUsername(usernameText.getText().toString()) && validatePassword(passwordText.getText().toString()))
-                System.out.println("DA");
+                loginRetrofit(usernameText.getText().toString(), passwordText.getText().toString());
+        });
+    }
+
+    private void loginRetrofit(String username, String password) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(MainActivity.BASEURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        LoginApi loginApi = retrofit.create(LoginApi.class);
+        Call<UserDetail> call = loginApi.getUser(username, password);
+
+        call.enqueue(new Callback<UserDetail>() {
+            @Override
+            public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
+                if(response.code() == 200) {
+                    switchToHome();
+                }else{
+                    System.out.println(response.code());
+                    Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserDetail> call, Throwable t) {
+                System.out.println(t.toString());
+            }
         });
     }
 
@@ -63,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void switchToRegister(){
         Intent switchActivity = new Intent(this, RegisterActivity.class);
+        startActivity(switchActivity);
+    }
+
+    private void switchToHome(){
+        Intent switchActivity = new Intent(this, HomeActivity.class);
         startActivity(switchActivity);
     }
 }
