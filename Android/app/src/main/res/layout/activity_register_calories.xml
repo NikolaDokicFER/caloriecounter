@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green_main"
+    tools:context=".ui.RegisterActivity">
+
+    <TextView
+        android:id="@+id/register_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="Calorie Counter"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/register_layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/register_gender_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender:"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/register_radio_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_toEndOf="@id/register_gender_text"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/register_gender_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="Male"
+                android:checked="true"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/register_gender_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="Female"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/register_layout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_layout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/register_age_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your age:"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/register_age"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/register_age_text"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:hint="age"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/register_layout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_layout2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/register_height_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your height:"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/register_height"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/register_height_text"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:hint="cm"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/register_layout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_layout3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/register_weight_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your height:"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/register_weight"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/register_weight_text"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:hint="kg"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/register_layout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_layout4"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/register_activity_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="How active is your lifestyle:"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/register_radio_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_activity_text"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/register_activity_never"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="Sedentary (no exercise)"
+                android:checked="true"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/register_activity_low"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="Light (1-3 days a week)"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/register_activity_moderate"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="Moderate (3-5 days a week)"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/register_activity_high"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="Active (5-7 days a week)"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/register_layout6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_layout5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/register_weight_loss_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Weekly weight gain/loss:"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/register_radio_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@id/register_weight_loss_text"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/register_weight_gain_0.25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="+0.25"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/register_weight_gain_0.50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="+0.5"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/register_weight_loss_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="0"
+                android:checked="true"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/register_weight_loss_0.25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="-0.25"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/register_weight_loss_0.50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"
+                android:text="-0.5"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/register_calories_button"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/register_layout6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/green_secondary"
+        android:text="REGISTER"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
