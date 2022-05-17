@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.HomeActivity">
+
+    <TextView
+        android:id="@+id/home_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"/>
+    <TextView
+        android:id="@+id/daily_calories_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/home_date"
+        android:text="Calories left for today"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/daily_calories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/daily_calories_text1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textSize="40sp" />
+
+    <RelativeLayout
+        android:id="@+id/home_relative1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/daily_calories"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/kcal_recommended_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recommended kcal:"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/kcal_recommended_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/kcal_recommended_text"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_relative2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_relative1"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/kcal_consumed_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consumed kcal:"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/kcal_consumed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/kcal_consumed_text"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

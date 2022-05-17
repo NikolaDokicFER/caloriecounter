@@ -18,7 +18,7 @@ public class FoodController {
     }
 
     @GetMapping("{name}")
-    public Food getFood(@PathVariable String name) throws Exception {
+    public Food getFood(@PathVariable String name){
         return this.foodService.getFood(name);
     }
 }

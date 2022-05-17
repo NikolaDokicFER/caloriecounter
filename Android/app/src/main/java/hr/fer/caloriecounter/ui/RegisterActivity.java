@@ -2,7 +2,6 @@ package hr.fer.caloriecounter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.RadioAccessSpecifier;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import hr.fer.caloriecounter.R;
-import hr.fer.caloriecounter.api.register.RegisterApi;
+import hr.fer.caloriecounter.api.RegisterApi;
 import hr.fer.caloriecounter.model.UserDetail;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password2Text;
     private Button registerButton;
     private UserDetail user;
+    private boolean caloriesScreen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +83,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
                 if(response.code() == 200) {
+                    switchToLoginActivity();
                     Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                 }else{
-                    System.out.println(response.code());
                     Toast.makeText(RegisterActivity.this, "Email address or username already taken", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -143,6 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void calculateUserCalories(){
+        caloriesScreen = true;
         setContentView(R.layout.activity_register_calories);
         EditText age = findViewById(R.id.register_age);
         EditText height = findViewById(R.id.register_height);
@@ -186,8 +187,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
             user.setCaloriesNeeded(caloriesNeeded);
             registerRetrofit(user);
-            switchToLoginActivity();
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(caloriesScreen){
+            setContentView(R.layout.activity_register);
+            caloriesScreen = false;
+        }else{
+            super.onBackPressed();
+        }
     }
 
     private void switchToLoginActivity(){

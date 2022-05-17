@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @RestController
 @AllArgsConstructor
@@ -20,7 +21,7 @@ public class ProgressController {
     }
 
     @GetMapping("{userId}/{date}")
-    public Progress getProgress(@PathVariable Long userId, @PathVariable Date date) throws Exception {
+    public Progress getProgress(@PathVariable Long userId, @PathVariable LocalDate date){
         return this.progressService.getProgress(userId, date);
     }
 }

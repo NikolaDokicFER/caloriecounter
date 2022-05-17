@@ -1,12 +1,17 @@
 package hr.fer.caloriecounter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -43,4 +48,12 @@ public class User{
 
     @Column
     private int caloriesNeeded;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "user")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
+    private List<Meal> userMeals;
 }

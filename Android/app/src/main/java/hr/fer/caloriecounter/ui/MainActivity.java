@@ -9,8 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import hr.fer.caloriecounter.R;
-import hr.fer.caloriecounter.api.login.LoginApi;
-import hr.fer.caloriecounter.api.register.RegisterApi;
+import hr.fer.caloriecounter.api.LoginApi;
 import hr.fer.caloriecounter.model.UserDetail;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
                 if(response.code() == 200) {
-                    switchToHome();
+                    switchToHome(response.body());
                 }else{
                     System.out.println(response.code());
                     Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
@@ -101,8 +100,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(switchActivity);
     }
 
-    private void switchToHome(){
+    private void switchToHome(UserDetail user){
         Intent switchActivity = new Intent(this, HomeActivity.class);
+        switchActivity.putExtra("user", user);
         startActivity(switchActivity);
     }
 }

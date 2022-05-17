@@ -6,16 +6,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ProgressAndMealKey implements Serializable {
+public class ProgressKey implements Serializable {
     private Long userId;
-    private Date date;
+    private LocalDate date;
 
-    ProgressAndMealKey(){
+    ProgressKey(){
     }
 }

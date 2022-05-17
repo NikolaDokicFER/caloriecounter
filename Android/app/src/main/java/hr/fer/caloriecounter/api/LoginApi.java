@@ -1,4 +1,4 @@
-package hr.fer.caloriecounter.api.login;
+package hr.fer.caloriecounter.api;
 
 import hr.fer.caloriecounter.model.UserDetail;
 import retrofit2.Call;

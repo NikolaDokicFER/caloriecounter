@@ -1,13 +1,14 @@
 package hr.fer.caloriecounter.controller;
 
 import hr.fer.caloriecounter.model.Meal;
-import hr.fer.caloriecounter.model.Progress;
+import hr.fer.caloriecounter.model.User;
 import hr.fer.caloriecounter.service.MealService;
-import hr.fer.caloriecounter.service.ProgressService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -22,7 +23,8 @@ public class MealController {
     }
 
     @GetMapping("{userId}/{date}")
-    public Meal getMeal(@PathVariable Long userId, @PathVariable Date date) throws Exception {
-        return this.mealService.getMeal(userId, date);
+    public List<Meal> getMeal(@PathVariable("userId") User user, @PathVariable String date){
+        LocalDate localDate = LocalDate.parse(date);
+        return this.mealService.getMeal(user, localDate);
     }
 }

@@ -1,5 +1,8 @@
 package hr.fer.caloriecounter.service;
 
+import hr.fer.caloriecounter.exception.EmailExistsException;
+import hr.fer.caloriecounter.exception.IncorrectPassswordException;
+import hr.fer.caloriecounter.exception.UsernameExistsException;
 import hr.fer.caloriecounter.model.User;
 import hr.fer.caloriecounter.repository.UserRepo;
 import lombok.AllArgsConstructor;
@@ -16,11 +19,9 @@ public class UserService {
 
     public User saveUser(User user){
         if(this.userRepository.existsByEmail(user.getEmail())) {
-            System.out.println("Email vec postoji"); ///POSTAVI THROWABLE
-            return null;
+            throw new EmailExistsException("Email already taken");
         }else if(this.userRepository.existsByUsername(user.getUsername())){
-            System.out.println("Korisnicko ime vec postjoi"); ///POSTAVI THROWABLE
-            return null;
+            throw new UsernameExistsException("Username already taken");
         }else{
             PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -28,14 +29,14 @@ public class UserService {
         }
     }
 
-    public User getUser(String username, String password) throws Exception{
-        User user = this.userRepository.findByUsername(username).orElseThrow(Exception::new);
+    public User getUser(String username, String password){
+        User user = this.userRepository.findByUsername(username).orElseThrow(() ->
+                new IncorrectPassswordException("Incorrect username or password"));
         PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
         if(bCryptPasswordEncoder.matches(password, user.getPassword())){
             return user;
         }else{
-            System.out.println("Kriva lozinka");
-            return null;
+            throw new IncorrectPassswordException("Incorrect username or password");
         }
     }
 }

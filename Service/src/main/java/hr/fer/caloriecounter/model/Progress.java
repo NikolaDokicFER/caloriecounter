@@ -8,7 +8,7 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -18,13 +18,13 @@ import java.util.UUID;
 
 @Entity
 @Table(name="progress")
-@IdClass(ProgressAndMealKey.class)
+@IdClass(ProgressKey.class)
 public class Progress {
     @Id
     private Long userId;
 
     @Id
-    private Date date;
+    private LocalDate date;
 
     @Column
     @NotNull

@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("{username}/{password}")
-    public User getUser(@PathVariable String username, @PathVariable String password) throws Exception {
+    public User getUser(@PathVariable String username, @PathVariable String password){
         return this.userService.getUser(username, password);
     }
 }
