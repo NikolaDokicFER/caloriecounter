@@ -5,6 +5,7 @@ import java.util.List;
 import hr.fer.caloriecounter.model.Meal;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -15,4 +16,7 @@ public interface MealApi {
 
     @GET("api/meal/{userId}/{date}")
     Call<List<Meal>> getMeals(@Path("userId") Long userId, @Path("date") String date);
+
+    @DELETE("api/meal/delete/{mealId}")
+    Call<Void> deleteMeal(@Path("mealId") Long mealId);
 }

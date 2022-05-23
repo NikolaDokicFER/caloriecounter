@@ -18,9 +18,11 @@ public class MealService {
     private final MealRepo mealRepository;
 
     public Meal saveMeal(Meal meal){
-        if(this.mealRepository.existsByUserAndDate(meal.getUser(), meal.getDate())){
-            throw new MealExistsException("Meal already exists");
-        }else{
+        if(this.mealRepository.existsByUserIdAndFoodIdAndDateAndType(meal.getUser().getId(), meal.getFood().getId(), meal.getDate(), meal.getType())){
+            Meal existingMeal = this.mealRepository.getByUserIdAndFoodIdAndDateAndType(meal.getUser().getId(), meal.getFood().getId(), meal.getDate(), meal.getType());
+            existingMeal.setQuantity(existingMeal.getQuantity() + meal.getQuantity());
+            return this.mealRepository.save(existingMeal);
+        }else {
             return this.mealRepository.save(meal);
         }
     }
@@ -28,5 +30,13 @@ public class MealService {
     public List<Meal> getMeal(User user, LocalDate date){
         return this.mealRepository.getByUserAndDate(user, date).orElseThrow(() ->
                 new IncorrectMealException("Meal not found"));
+    }
+
+    public void deleteMeal(Long mealId){
+        if(!this.mealRepository.existsById(mealId)){
+            throw new MealExistsException("Meal does not exist");
+        }else{
+            this.mealRepository.deleteById(mealId);
+        }
     }
 }

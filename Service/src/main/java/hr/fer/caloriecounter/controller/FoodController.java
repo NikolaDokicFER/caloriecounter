@@ -5,6 +5,8 @@ import hr.fer.caloriecounter.service.FoodService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/food")
@@ -15,6 +17,11 @@ public class FoodController {
     @PostMapping
     public Food saveFood(@RequestBody Food food){
         return this.foodService.saveFood(food);
+    }
+
+    @GetMapping
+    public List<Food> getAllFood(){
+        return this.foodService.getAllFood();
     }
 
     @GetMapping("{name}")

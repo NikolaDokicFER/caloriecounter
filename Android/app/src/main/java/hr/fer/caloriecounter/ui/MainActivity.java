@@ -3,10 +3,13 @@ package hr.fer.caloriecounter.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import hr.fer.caloriecounter.R;
 import hr.fer.caloriecounter.api.LoginApi;
@@ -27,12 +30,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
         initUI();
         initListeners();
+    }
+
+    @Override
+    public void onBackPressed(){
+        finishAffinity();
     }
 
     private void initUI(){
@@ -64,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
                 if(response.code() == 200) {
+                    SharedPreferences.Editor shEditor = SplashScreenActivity.sharedPreferences.edit();
+                    shEditor.putBoolean("loggedIn", true);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(response.body());
+                    shEditor.putString("User", json);
+                    shEditor.apply();
                     switchToHome(response.body());
                 }else{
                     System.out.println(response.code());

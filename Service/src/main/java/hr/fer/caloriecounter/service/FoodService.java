@@ -7,6 +7,8 @@ import hr.fer.caloriecounter.repository.FoodRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class FoodService {
@@ -18,6 +20,10 @@ public class FoodService {
         }else{
             return this.foodRepository.save(food);
         }
+    }
+
+    public List<Food> getAllFood(){
+        return this.foodRepository.findAll();
     }
 
     public Food getFood(String name){

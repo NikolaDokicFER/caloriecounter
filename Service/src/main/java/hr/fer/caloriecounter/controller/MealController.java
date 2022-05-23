@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -26,5 +25,10 @@ public class MealController {
     public List<Meal> getMeal(@PathVariable("userId") User user, @PathVariable String date){
         LocalDate localDate = LocalDate.parse(date);
         return this.mealService.getMeal(user, localDate);
+    }
+
+    @DeleteMapping("delete/{mealId}")
+    public void deleteMeal(@PathVariable("mealId") Long mealId){
+        this.mealService.deleteMeal(mealId);
     }
 }

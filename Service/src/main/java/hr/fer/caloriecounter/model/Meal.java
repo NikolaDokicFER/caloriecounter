@@ -38,15 +38,13 @@ public class Meal {
     @NotNull
     private Float quantity;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "food_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude
     private Food food;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude

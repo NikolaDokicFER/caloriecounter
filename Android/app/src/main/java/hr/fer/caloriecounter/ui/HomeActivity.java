@@ -12,11 +12,11 @@ import hr.fer.caloriecounter.R;
 import hr.fer.caloriecounter.model.UserDetail;
 
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
-    BottomNavigationView bottomNavigationView;
-    Bundle bundle = new Bundle();
-    HomeFragment homeFragment = new HomeFragment();
-    JournalFragment journalFragment = new JournalFragment();
-    SettingsFragment settingsFragment = new SettingsFragment();
+    private BottomNavigationView bottomNavigationView;
+    private Bundle bundle = new Bundle();
+    private HomeFragment homeFragment = new HomeFragment();
+    private JournalFragment journalFragment = new JournalFragment();
+    private SettingsFragment settingsFragment = new SettingsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            finishAffinity();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
@@ -43,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.icon_calendar:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_fragment, journalFragment).commit();
+                journalFragment.setArguments(bundle);
                 return true;
 
             case R.id.icon_user:

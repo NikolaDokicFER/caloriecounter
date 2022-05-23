@@ -15,7 +15,9 @@
         android:theme="@style/Theme.MyApplication">
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.HomeActivity"/>
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.FoodDetailActivity"/>
+        <activity android:name=".ui.SplashScreenActivity"
             android:exported="true">
 
             <intent-filter>
