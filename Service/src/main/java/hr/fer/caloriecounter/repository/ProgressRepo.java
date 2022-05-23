@@ -5,10 +5,10 @@ import hr.fer.caloriecounter.model.ProgressKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
 
 public interface ProgressRepo extends JpaRepository<Progress, ProgressKey> {
-    Optional<Progress> getByUserIdAndDate(Long userId, LocalDate date);
+    List<Progress> getAllByUserId(Long userId);
 
-    boolean existsByUserIdAndDate(Long userId, LocalDate date);
+    void deleteByUserIdAndDate(Long userId, LocalDate date);
 }

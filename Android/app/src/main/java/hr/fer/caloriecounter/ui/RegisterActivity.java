@@ -32,7 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password2Text;
     private Button registerButton;
     private UserDetail user;
-    private boolean caloriesScreen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,34 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setUsername(usernameText.getText().toString());
                 user.setPassword(password1Text.getText().toString());
 
-                calculateUserCalories();
-            }
-        });
-    }
-
-    private void registerRetrofit(UserDetail user) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MainActivity.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RegisterApi registerApi = retrofit.create(RegisterApi.class);
-        Call<UserDetail> call = registerApi.saveUser(user);
-
-        call.enqueue(new Callback<UserDetail>() {
-            @Override
-            public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
-                if(response.code() == 200) {
-                    switchToLoginActivity();
-                    Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(RegisterActivity.this, "Email address or username already taken", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserDetail> call, Throwable t) {
-                System.out.println(t.toString());
+                switchToCaloriesActivity(user);
             }
         });
     }
@@ -142,66 +114,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void calculateUserCalories(){
-        caloriesScreen = true;
-        setContentView(R.layout.activity_register_calories);
-        EditText age = findViewById(R.id.register_age);
-        EditText height = findViewById(R.id.register_height);
-        EditText weight = findViewById(R.id.register_weight);
-        RadioGroup groupGender = findViewById(R.id.register_radio_gender);
-        RadioGroup groupActivity = findViewById(R.id.register_radio_activity);
-        RadioGroup groupWeight = findViewById(R.id.register_radio_weight);
-        Button button = findViewById(R.id.register_calories_button);
-
-        button.setOnClickListener(view ->{
-            user.setWeight(Integer.parseInt(weight.getText().toString()));
-
-            int caloriesNeeded = 0;
-            caloriesNeeded += Integer.parseInt(height.getText().toString())*6.25;
-            caloriesNeeded += Integer.parseInt(weight.getText().toString())*10;
-            caloriesNeeded -= Integer.parseInt(age.getText().toString())*5;
-
-            int group1 = groupGender.getCheckedRadioButtonId();
-            RadioButton userGender = (RadioButton) findViewById(group1);
-            switch (userGender.getText().toString()){
-                case "Male": caloriesNeeded += 5; break;
-                case "Female": caloriesNeeded -= 161; break;
-            }
-
-            int group2 = groupActivity.getCheckedRadioButtonId();
-            RadioButton userActivity = (RadioButton) findViewById(group2);
-            switch (userActivity.getText().toString()){
-                case "Sedentary (no exercise)": caloriesNeeded *= 1.2; break;
-                case "Light (1-3 days a week)": caloriesNeeded *= 1.375; break;
-                case "Moderate (3-5 days a week)": caloriesNeeded *= 1.55; break;
-                case "Active (5-7 days a week)": caloriesNeeded *= 1.725; break;
-            }
-
-            int group3 = groupWeight.getCheckedRadioButtonId();
-            RadioButton userWeight = (RadioButton) findViewById(group3);
-            switch (userWeight.getText().toString()){
-                case "+0.25": caloriesNeeded *= 1.1; break;
-                case "+0.5": caloriesNeeded *= 1.21; break;
-                case "-0.25": caloriesNeeded *= 0.9; break;
-                case "-0.5": caloriesNeeded *= 0.79; break;
-            }
-            user.setCaloriesNeeded(caloriesNeeded);
-            registerRetrofit(user);
-        });
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(caloriesScreen){
-            setContentView(R.layout.activity_register);
-            caloriesScreen = false;
-        }else{
-            super.onBackPressed();
-        }
-    }
-
-    private void switchToLoginActivity(){
-        Intent switchActivity = new Intent(this, MainActivity.class);
+    private void switchToCaloriesActivity(UserDetail user) {
+        Intent switchActivity = new Intent(this, RegisterCaloriesActivity.class);
+        switchActivity.putExtra("user", user);
+        switchActivity.putExtra("updating", false);
         startActivity(switchActivity);
     }
 }

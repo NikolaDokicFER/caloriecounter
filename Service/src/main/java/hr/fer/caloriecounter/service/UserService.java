@@ -29,6 +29,13 @@ public class UserService {
         }
     }
 
+    public User updateUser(User user){
+        User user1 = this.userRepository.getById(user.getId());
+        user1.setCaloriesNeeded(user.getCaloriesNeeded());
+        user1.setWeight(user.getWeight());
+        return this.userRepository.save(user1);
+    }
+
     public User getUser(String username, String password){
         User user = this.userRepository.findByUsername(username).orElseThrow(() ->
                 new IncorrectPassswordException("Incorrect username or password"));

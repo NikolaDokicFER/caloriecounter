@@ -5,11 +5,175 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.HomeActivity">
 
-    <TextView
-        android:id="@+id/viewtextyyy"
+    <Button
+        android:id="@+id/home_date"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/date_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="JOURNAL"
+        android:layout_toStartOf="@id/home_date"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="-8dp"
+        android:src="@drawable/ic_back"
+        android:backgroundTint="@color/white"/>
+
+    <ImageButton
+        android:id="@+id/date_forward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/home_date"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_forward"
+        android:backgroundTint="@color/white"/>
+
+    <RelativeLayout
+        android:id="@+id/home_relative2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_date"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/kcal_consumed_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consumed kcal:"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/kcal_consumed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/kcal_consumed_text"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_relative3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_relative2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:id="@+id/home_breakfast_text"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_shape"
+            android:text="  BREAKFAST\n consumed calories: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/home_breakfast_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/home_breakfast_text"
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@drawable/custom_button_shape"
+            android:src="@drawable/ic_add" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/home_consumed_breakfast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_relative3"
+        android:backgroundTint="@color/white"
+        android:layout_centerHorizontal="true"
+        android:text="See consumed food"
+        android:textColor="#03c6fc"/>
+
+    <RelativeLayout
+        android:id="@+id/home_relative4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_relative3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:id="@+id/home_lunch_text"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_shape"
+            android:text="  LUNCH\n consumed calories: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/home_lunch_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/home_lunch_text"
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@drawable/custom_button_shape"
+            android:src="@drawable/ic_add" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/home_consumed_lunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_relative4"
+        android:backgroundTint="@color/white"
+        android:layout_centerHorizontal="true"
+        android:text="See consumed food"
+        android:textColor="#03c6fc"/>
+
+    <RelativeLayout
+        android:id="@+id/home_relative5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_relative4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:id="@+id/home_dinner_text"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button_shape"
+            android:text="  DINNER\n consumed calories: "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/home_dinner_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/home_dinner_text"
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@drawable/custom_button_shape"
+            android:src="@drawable/ic_add" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/home_consumed_dinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_relative5"
+        android:backgroundTint="@color/white"
+        android:layout_centerHorizontal="true"
+        android:text="See consumed food"
+        android:textColor="#03c6fc"/>
+
 </RelativeLayout>

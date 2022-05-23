@@ -17,19 +17,24 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private HomeFragment homeFragment = new HomeFragment();
     private JournalFragment journalFragment = new JournalFragment();
     private SettingsFragment settingsFragment = new SettingsFragment();
+    private boolean updated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
 
         UserDetail user = (UserDetail) getIntent().getSerializableExtra("user");
+        updated = getIntent().getBooleanExtra("update", false);
         bundle.putSerializable("user", user);
 
+        getSupportActionBar().hide();
         bottomNavigationView = findViewById(R.id.home_navigation);
 
         bottomNavigationView.setOnItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.icon_home);
+        if (updated) bottomNavigationView.setSelectedItemId(R.id.icon_user);
+        else bottomNavigationView.setSelectedItemId(R.id.icon_home);
     }
 
     @Override
@@ -59,6 +64,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.icon_user:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_fragment, settingsFragment).commit();
+                settingsFragment.setArguments(bundle);
                 return true;
         }
         return false;

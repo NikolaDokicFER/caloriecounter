@@ -3,11 +3,8 @@ package hr.fer.caloriecounter.controller;
 import hr.fer.caloriecounter.model.User;
 import hr.fer.caloriecounter.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.SecureRandom;
 
 @RestController
 @AllArgsConstructor
@@ -19,6 +16,11 @@ public class UserController {
     @PostMapping
     public User saveUser(@RequestBody User user){
         return this.userService.saveUser(user);
+    }
+
+    @PostMapping("update")
+    public User updateUser(@RequestBody User user){
+        return this.userService.updateUser(user);
     }
 
     @GetMapping("{username}/{password}")
