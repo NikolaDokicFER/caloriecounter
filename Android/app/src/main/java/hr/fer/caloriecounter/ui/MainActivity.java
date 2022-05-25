@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import hr.fer.caloriecounter.NetworkClient;
 import hr.fer.caloriecounter.R;
 import hr.fer.caloriecounter.api.LoginApi;
 import hr.fer.caloriecounter.model.UserDetail;
@@ -21,7 +22,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String BASEURL = "http://10.0.2.2:8080/";
     private EditText usernameText;
     private EditText passwordText;
     private Button loginButton;
@@ -60,10 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginRetrofit(String username, String password) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MainActivity.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = NetworkClient.retrofit();
 
         LoginApi loginApi = retrofit.create(LoginApi.class);
         Call<UserDetail> call = loginApi.getUser(username, password);

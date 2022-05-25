@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import hr.fer.caloriecounter.NetworkClient;
 import hr.fer.caloriecounter.R;
 import hr.fer.caloriecounter.api.FoodApi;
 import hr.fer.caloriecounter.api.MealApi;
@@ -222,10 +223,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void mealsRetrofit(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MainActivity.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = NetworkClient.retrofit();
 
         MealApi mealApi = retrofit.create(MealApi.class);
         Call<List<Meal>> call = mealApi.getMeals(user.getId(), currentDate.toString());
@@ -251,10 +249,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void deleteMealRetrofit(Long mealId){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MainActivity.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = NetworkClient.retrofit();
 
         MealApi mealApi = retrofit.create(MealApi.class);
         Call<Void> call = mealApi.deleteMeal(mealId);
@@ -279,10 +274,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void foodRetrofit(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MainActivity.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = NetworkClient.retrofit();
 
         FoodApi foodApi = retrofit.create(FoodApi.class);
         Call<List<Food>> call = foodApi.getAllFood();

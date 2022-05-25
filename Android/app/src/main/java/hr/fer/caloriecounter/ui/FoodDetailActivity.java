@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import hr.fer.caloriecounter.NetworkClient;
 import hr.fer.caloriecounter.R;
 import hr.fer.caloriecounter.api.FoodApi;
 import hr.fer.caloriecounter.api.MealApi;
@@ -110,10 +111,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void getFoodRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MainActivity.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = NetworkClient.retrofit();
 
         FoodApi foodApi = retrofit.create(FoodApi.class);
         Call<Food> call = foodApi.getFood(foodName);
@@ -144,10 +142,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void addMealRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MainActivity.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = NetworkClient.retrofit();
 
         MealApi mealApi = retrofit.create(MealApi.class);
         Call<Meal> call = mealApi.saveMeal(meal);

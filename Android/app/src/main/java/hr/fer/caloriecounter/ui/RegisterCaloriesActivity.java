@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
+import hr.fer.caloriecounter.NetworkClient;
 import hr.fer.caloriecounter.R;
 import hr.fer.caloriecounter.api.RegisterApi;
 import hr.fer.caloriecounter.model.UserDetail;
@@ -99,10 +100,7 @@ public class RegisterCaloriesActivity extends AppCompatActivity {
     }
 
     private void updateRetrofit(UserDetail user) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MainActivity.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = NetworkClient.retrofit();
 
         RegisterApi registerApi = retrofit.create(RegisterApi.class);
         Call<UserDetail> call = registerApi.updateUser(user);
@@ -127,11 +125,7 @@ public class RegisterCaloriesActivity extends AppCompatActivity {
     }
 
     private void registerRetrofit(UserDetail user) {
-        System.out.println("REGISTER");
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MainActivity.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = NetworkClient.retrofit();
 
         RegisterApi registerApi = retrofit.create(RegisterApi.class);
         Call<UserDetail> call = registerApi.saveUser(user);

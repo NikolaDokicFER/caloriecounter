@@ -10,7 +10,6 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -18,23 +17,24 @@ import java.util.UUID;
 @Setter
 @ToString
 @RequiredArgsConstructor
-
 @Entity
-@Table(name="progress")
-@IdClass(ProgressKey.class)
-public class Progress {
+public class Image {
     @Id
-    private Long userId;
-
-    @Id
-    private LocalDate date;
+    @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private UUID uuid;
 
     @Column
     @NotNull
-    private Float weight;
+    @Enumerated(EnumType.STRING)
+    private ImageExtension imageExtension;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "image_id")
-    @ToString.Exclude
-    private Image image;
+    @JsonIgnore
+    @Transient
+    public String getFileName(){
+        return this.uuid.toString() + "." + this.imageExtension.name().toLowerCase(Locale.ROOT);
+    }
 }

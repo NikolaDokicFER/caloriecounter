@@ -5,8 +5,7 @@ import hr.fer.caloriecounter.service.ProgressService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -20,8 +19,8 @@ public class ProgressController {
         return this.progressService.saveProgress(progress);
     }
 
-    @GetMapping("{userId}/{date}")
-    public Progress getProgress(@PathVariable Long userId, @PathVariable LocalDate date){
-        return this.progressService.getProgress(userId, date);
+    @GetMapping("{userId}")
+    public List<Progress> getProgress(@PathVariable Long userId){
+        return this.progressService.getProgress(userId);
     }
 }

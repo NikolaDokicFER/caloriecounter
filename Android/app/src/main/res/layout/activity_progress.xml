@@ -22,5 +22,12 @@
         android:backgroundTint="#f3fcef"
         android:src="@drawable/ic_add" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/progress_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/progress_add_button"
+        android:layout_marginTop="30dp" />
+
 
 </RelativeLayout>

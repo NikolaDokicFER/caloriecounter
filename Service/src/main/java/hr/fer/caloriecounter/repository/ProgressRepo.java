@@ -10,5 +10,7 @@ import java.util.List;
 public interface ProgressRepo extends JpaRepository<Progress, ProgressKey> {
     List<Progress> getAllByUserId(Long userId);
 
+    boolean existsByUserIdAndDate(Long userId, LocalDate date);
+
     void deleteByUserIdAndDate(Long userId, LocalDate date);
 }
