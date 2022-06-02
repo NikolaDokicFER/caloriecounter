@@ -1,7 +1,7 @@
 package hr.fer.caloriecounter.service;
 
-import hr.fer.caloriecounter.exception.IncorrectProgressException;
 import hr.fer.caloriecounter.exception.ProgressExistsException;
+import hr.fer.caloriecounter.exception.ProgressNotFound;
 import hr.fer.caloriecounter.model.Progress;
 import hr.fer.caloriecounter.repository.ProgressRepo;
 import lombok.AllArgsConstructor;
@@ -23,6 +23,10 @@ public class ProgressService {
     }
 
     public List<Progress> getProgress(Long userId){
-        return this.progressRepository.getAllByUserId(userId);
+        if(progressRepository.existsByUserId(userId)){
+            return this.progressRepository.getAllByUserId(userId);
+        }else{
+            throw new ProgressNotFound("Progress not found");
+        }
     }
 }

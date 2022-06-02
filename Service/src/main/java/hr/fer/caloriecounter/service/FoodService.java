@@ -1,7 +1,7 @@
 package hr.fer.caloriecounter.service;
 
 import hr.fer.caloriecounter.exception.FoodExistsException;
-import hr.fer.caloriecounter.exception.IncorrectFoodException;
+import hr.fer.caloriecounter.exception.FoodNotFound;
 import hr.fer.caloriecounter.model.Food;
 import hr.fer.caloriecounter.repository.FoodRepo;
 import lombok.AllArgsConstructor;
@@ -28,6 +28,6 @@ public class FoodService {
 
     public Food getFood(String name){
         return this.foodRepository.findByName(name).orElseThrow(() ->
-            new IncorrectFoodException("Food not found"));
+            new FoodNotFound("Food not found"));
     }
 }

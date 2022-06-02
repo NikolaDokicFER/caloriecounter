@@ -1,6 +1,6 @@
 package hr.fer.caloriecounter.service;
 
-import hr.fer.caloriecounter.exception.IncorrectImageException;
+import hr.fer.caloriecounter.exception.ImageNotFound;
 import hr.fer.caloriecounter.model.Image;
 import hr.fer.caloriecounter.model.enums.ImageExtension;
 import hr.fer.caloriecounter.repository.ImageRepo;
@@ -56,14 +56,14 @@ public class ImageService {
     }
 
     public Image getImageByUuid(UUID imageUuid){
-        return this.imageRepository.findById(imageUuid).orElseThrow(() -> new IncorrectImageException("Image not found"));
+        return this.imageRepository.findById(imageUuid).orElseThrow(() -> new ImageNotFound("Image not found"));
     }
 
     public byte[] getImageFile(Image image) {
         try {
             return Files.readAllBytes(this.root.resolve(image.getFileName()));
         } catch (IOException e) {
-            throw new IncorrectImageException("Image not found");
+            throw new ImageNotFound("Image not found");
         }
     }
 

@@ -1,6 +1,6 @@
 package hr.fer.caloriecounter.service;
 
-import hr.fer.caloriecounter.exception.IncorrectMealException;
+import hr.fer.caloriecounter.exception.MealNotFound;
 import hr.fer.caloriecounter.exception.MealExistsException;
 import hr.fer.caloriecounter.model.Meal;
 import hr.fer.caloriecounter.model.User;
@@ -8,7 +8,6 @@ import hr.fer.caloriecounter.repository.MealRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class MealService {
 
     public List<Meal> getMeal(User user, LocalDate date){
         return this.mealRepository.getByUserAndDate(user, date).orElseThrow(() ->
-                new IncorrectMealException("Meal not found"));
+                new MealNotFound("Meal not found"));
     }
 
     public void deleteMeal(Long mealId){
