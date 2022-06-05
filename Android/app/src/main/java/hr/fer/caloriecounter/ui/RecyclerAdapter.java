@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 
 import hr.fer.caloriecounter.NetworkClient;
@@ -35,6 +36,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     public void setProgress(List<Progress> progressList){
         this.progressList = progressList;
+        Collections.sort(this.progressList);
+        Collections.reverse(this.progressList);
     }
 
     @NonNull

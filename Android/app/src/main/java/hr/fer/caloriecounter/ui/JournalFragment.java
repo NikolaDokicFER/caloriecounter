@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ import hr.fer.caloriecounter.model.Food;
 import hr.fer.caloriecounter.model.Meal;
 import hr.fer.caloriecounter.model.UserDetail;
 import hr.fer.caloriecounter.model.enums.MealType;
+import hr.fer.caloriecounter.sqlite.CalorieCounterDbHelper;
 import lombok.NoArgsConstructor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,6 +73,8 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
     private int caloriesConsumedDinner;
     private SearchableSpinner spinnerAllFood;
     private SearchableSpinner spinnerConsumedFood;
+    private CalorieCounterDbHelper dbHelper;
+    private ArrayList<String> allFoodList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,6 +95,14 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         caloriesConsumedDinner = 0;
         mealsToday = new ArrayList<>();
 
+        dbHelper = new CalorieCounterDbHelper(getContext());
+        allFoodList = new ArrayList<>();
+        Cursor cursor = dbHelper.fetchEntries();
+
+        while(cursor.moveToNext()){
+            allFoodList.add(cursor.getString(1) + "♥︎");
+        }
+        cursor.close();
         mealsRetrofit();
     }
 
@@ -122,6 +134,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         foodDinnerBtn = getView().findViewById(R.id.home_consumed_dinner);
 
         spinnerAllFood = new SearchableSpinner(getContext());
+        spinnerAllFood.setSpinnerListItems(allFoodList);
         spinnerAllFood.setWindowTitle("Select a food to add");
 
         spinnerConsumedFood = new SearchableSpinner(getContext());
@@ -164,7 +177,10 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
                     Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
-                    switchActivity.putExtra("foodName", selectedString);
+                    if(selectedString.contains("♥︎"))
+                        switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
+                    else
+                        switchActivity.putExtra("foodName", selectedString);
                     switchActivity.putExtra("user", user);
                     switchActivity.putExtra("date", String.valueOf(selectedDate));
                     switchActivity.putExtra("type", "BREAKFAST");
@@ -179,7 +195,10 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
                     Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
-                    switchActivity.putExtra("foodName", selectedString);
+                    if(selectedString.contains("♥︎"))
+                        switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
+                    else
+                        switchActivity.putExtra("foodName", selectedString);
                     switchActivity.putExtra("user", user);
                     switchActivity.putExtra("date", String.valueOf(selectedDate));
                     switchActivity.putExtra("type", "LUNCH");
@@ -194,8 +213,10 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
                     Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
-                    switchActivity.putExtra("foodName", selectedString);
-                    switchActivity.putExtra("user", user);
+                    if(selectedString.contains("♥︎"))
+                        switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
+                    else
+                        switchActivity.putExtra("foodName", selectedString);                    switchActivity.putExtra("user", user);
                     switchActivity.putExtra("date", String.valueOf(selectedDate));
                     switchActivity.putExtra("type", "DINNER");
                     startActivity(switchActivity);
@@ -205,7 +226,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         });
 
         foodBreakfastBtn.setOnClickListener(view ->{
-            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.BREAKFAST).map(m -> m.getFood().getName() + " (" + m.getQuantity() * m.getFood().getCalories() + ")" ).collect(Collectors.toList())));
+            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.BREAKFAST).map(m -> m.getFood().getName() + " (" + (int) (m.getQuantity() * m.getFood().getCalories()) + ")" ).collect(Collectors.toList())));
 
             spinnerConsumedFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
@@ -219,7 +240,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         });
 
         foodLunchBtn.setOnClickListener(view ->{
-            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.LUNCH).map(m -> m.getFood().getName() + " (" + m.getQuantity() * m.getFood().getCalories() + ")" ).collect(Collectors.toList())));
+            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.LUNCH).map(m -> m.getFood().getName() + " (" + (int) (m.getQuantity() * m.getFood().getCalories()) + ")" ).collect(Collectors.toList())));
 
             spinnerConsumedFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
@@ -233,7 +254,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         });
 
         foodDinnerBtn.setOnClickListener(view ->{
-            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.DINNER).map(m -> m.getFood().getName() + " (" + m.getQuantity() * m.getFood().getCalories() + ")" ).collect(Collectors.toList())));
+            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.DINNER).map(m -> m.getFood().getName() + " (" + (int) (m.getQuantity() * m.getFood().getCalories()) + ")" ).collect(Collectors.toList())));
 
             spinnerConsumedFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
@@ -308,7 +329,12 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
                 if(response.code() == 200){
-                    spinnerAllFood.setSpinnerListItems(new ArrayList<>(response.body().stream().map(Food::getName).collect(Collectors.toList())));
+                    ArrayList<String> helpList = new ArrayList<>(allFoodList);
+                    for (int i = 0; i < helpList.size(); i++) helpList.set(i, helpList.get(i).substring(0, helpList.get(i).length() - 2));
+                    allFoodList.addAll(response.body().stream().map(Food::getName).collect(Collectors.toList()));
+                    allFoodList.removeAll(helpList);
+
+                    spinnerAllFood.setSpinnerListItems(allFoodList);
                     initListeners();
                 }else{
                     System.out.println(response.code());

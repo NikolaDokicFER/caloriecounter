@@ -1,19 +1,14 @@
 package hr.fer.caloriecounter.ui;
 
 import android.app.Dialog;
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import hr.fer.caloriecounter.NetworkClient;
+import hr.fer.caloriecounter.PathUtil;
 import hr.fer.caloriecounter.R;
 import hr.fer.caloriecounter.api.ImageApi;
 import hr.fer.caloriecounter.api.ProgressApi;
@@ -40,9 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProgressActivity extends AppCompatActivity implements DatePickerFragment.IDateSetListener{
+public class ProgressActivity extends AppCompatActivity implements DatePickerFragment.IDateSetListener {
     private UserDetail user;
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
@@ -65,7 +60,7 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         getProgressRetrofit();
     }
 
-    private void initUI(){
+    private void initUI() {
         addButton = findViewById(R.id.progress_add_button);
 
         recyclerView = findViewById(R.id.progress_recycler_view);
@@ -76,13 +71,13 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
                 DividerItemDecoration.VERTICAL));
     }
 
-    private void initListeners(){
+    private void initListeners() {
         addButton.setOnClickListener(view -> {
             addProgressDialog();
         });
     }
 
-    private void addProgressDialog(){
+    private void addProgressDialog() {
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -95,32 +90,38 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         Button addButton = dialog.findViewById(R.id.add_progress_add_btn);
 
         DatePickerFragment newFragemnt = new DatePickerFragment();
-        ((DatePickerFragment)newFragemnt).setIDateSetListener(this);
+        ((DatePickerFragment) newFragemnt).setIDateSetListener(this);
 
         dateButton.setOnClickListener(view -> {
             newFragemnt.show(getSupportFragmentManager(), "datePicker");
         });
 
-        photoButton.setOnClickListener(view ->{
+        photoButton.setOnClickListener(view -> {
             photoPicker.launch("image/*");
             photoButton.setBackgroundColor(Color.parseColor("#4fe37a"));
         });
 
         addButton.setOnClickListener(view -> {
-            progress = new Progress();
-            progress.setDate(dateButton.getText().toString());
-            progress.setWeight(Float.parseFloat(weightText.getText().toString()));
-            progress.setUserId(user.getId());
+            if (weightText.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please enter your weight", Toast.LENGTH_SHORT).show();
+            } else if (imageFile == null) {
+                Toast.makeText(this, "Please upload your photo", Toast.LENGTH_SHORT).show();
+            } else {
+                progress = new Progress();
+                progress.setDate(dateButton.getText().toString());
+                progress.setWeight(Float.parseFloat(weightText.getText().toString()));
+                progress.setUserId(user.getId());
 
-            photoRetrofit();
+                photoRetrofit();
 
-            dialog.dismiss();
+                dialog.dismiss();
+            }
         });
 
         dialog.show();
     }
 
-    private void getProgressRetrofit(){
+    private void getProgressRetrofit() {
         Retrofit retrofit = NetworkClient.retrofit();
 
         ProgressApi progressApi = retrofit.create(ProgressApi.class);
@@ -129,10 +130,10 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         call.enqueue(new Callback<List<Progress>>() {
             @Override
             public void onResponse(Call<List<Progress>> call, Response<List<Progress>> response) {
-                if(response.code() == 200){
+                if (response.code() == 200) {
                     recyclerAdapter.setProgress(response.body());
                     recyclerView.setAdapter(recyclerAdapter);
-                }else{
+                } else {
                     System.out.println(response.code());
                 }
             }
@@ -144,7 +145,7 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         });
     }
 
-    private void addProgressRetrofit(){
+    private void addProgressRetrofit() {
         Retrofit retrofit = NetworkClient.retrofit();
 
         ProgressApi progressApi = retrofit.create(ProgressApi.class);
@@ -153,10 +154,10 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         call.enqueue(new Callback<Progress>() {
             @Override
             public void onResponse(Call<Progress> call, Response<Progress> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     getProgressRetrofit();
                     Toast.makeText(ProgressActivity.this, "Progress entered", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     System.out.println(response.code());
                 }
             }
@@ -168,7 +169,7 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         });
     }
 
-    private void photoRetrofit(){
+    private void photoRetrofit() {
         Retrofit retrofit = NetworkClient.retrofit();
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
@@ -180,10 +181,10 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         call.enqueue(new Callback<Image>() {
             @Override
             public void onResponse(Call<Image> call, Response<Image> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     progress.setImage(response.body());
                     addProgressRetrofit();
-                }else{
+                } else {
                     System.out.println(response.code());
                 }
             }
@@ -202,26 +203,14 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         dateButton.setText(selectedDate.toString());
     }
 
-    private void getPathFromURI(Uri uri) {
-        String filePath;
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        if (cursor == null) {
-            filePath = uri.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            filePath = cursor.getString(idx);
-            cursor.close();
-        }
-        imageFile = new File(filePath);
-    }
-
     ActivityResultLauncher<String> photoPicker = registerForActivityResult(new ActivityResultContracts.GetContent(),
-            new ActivityResultCallback<Uri>() {
-                @Override
-                public void onActivityResult(Uri uri) {
+            uri -> {
+                try {
+                    String path = PathUtil.getPath(this, uri);
+                    imageFile = new File(path);
                     Toast.makeText(ProgressActivity.this, "Photo selected", Toast.LENGTH_SHORT).show();
-                    getPathFromURI(uri);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
                 }
             });
 }

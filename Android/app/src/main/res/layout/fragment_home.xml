@@ -110,7 +110,7 @@
             android:layout_toEndOf="@id/home_breakfast_text"
             android:foreground="?attr/selectableItemBackground"
             android:background="@drawable/custom_button_shape"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_add_white" />
 
     </RelativeLayout>
 
@@ -149,7 +149,7 @@
             android:layout_toEndOf="@id/home_lunch_text"
             android:foreground="?attr/selectableItemBackground"
             android:background="@drawable/custom_button_shape"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_add_white" />
 
     </RelativeLayout>
 
@@ -188,7 +188,7 @@
             android:layout_toEndOf="@id/home_dinner_text"
             android:foreground="?attr/selectableItemBackground"
             android:background="@drawable/custom_button_shape"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_add_white" />
     </RelativeLayout>
 
     <Button

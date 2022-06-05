@@ -47,7 +47,7 @@ public class RegisterCaloriesActivity extends AppCompatActivity {
         initListeners();
     }
 
-    private void initUI(){
+    private void initUI() {
         age = findViewById(R.id.register_age);
         height = findViewById(R.id.register_height);
         weight = findViewById(R.id.register_weight);
@@ -57,44 +57,76 @@ public class RegisterCaloriesActivity extends AppCompatActivity {
         button = findViewById(R.id.register_calories_button);
     }
 
-    private void initListeners(){
-        button.setOnClickListener(view ->{
-            user.setWeight(Integer.parseInt(weight.getText().toString()));
+    private void initListeners() {
+        button.setOnClickListener(view -> {
 
-            int caloriesNeeded = 0;
-            caloriesNeeded += Integer.parseInt(height.getText().toString())*6.25;
-            caloriesNeeded += Integer.parseInt(weight.getText().toString())*10;
-            caloriesNeeded -= Integer.parseInt(age.getText().toString())*5;
+            if (height.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please enter your height", Toast.LENGTH_SHORT).show();
+            } else if (weight.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please enter your weight", Toast.LENGTH_SHORT).show();
+            } else if (age.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show();
+            } else {
 
-            int group1 = groupGender.getCheckedRadioButtonId();
-            RadioButton userGender = (RadioButton) findViewById(group1);
-            switch (userGender.getText().toString()){
-                case "Male": caloriesNeeded += 5; break;
-                case "Female": caloriesNeeded -= 161; break;
-            }
+                user.setWeight(Integer.parseInt(weight.getText().toString()));
 
-            int group2 = groupActivity.getCheckedRadioButtonId();
-            RadioButton userActivity = (RadioButton) findViewById(group2);
-            switch (userActivity.getText().toString()){
-                case "Sedentary (no exercise)": caloriesNeeded *= 1.2; break;
-                case "Light (1-3 days a week)": caloriesNeeded *= 1.375; break;
-                case "Moderate (3-5 days a week)": caloriesNeeded *= 1.55; break;
-                case "Active (5-7 days a week)": caloriesNeeded *= 1.725; break;
-            }
+                int caloriesNeeded = 0;
+                caloriesNeeded += Integer.parseInt(height.getText().toString()) * 6.25;
+                caloriesNeeded += Integer.parseInt(weight.getText().toString()) * 10;
+                caloriesNeeded -= Integer.parseInt(age.getText().toString()) * 5;
 
-            int group3 = groupWeight.getCheckedRadioButtonId();
-            RadioButton userWeight = (RadioButton) findViewById(group3);
-            switch (userWeight.getText().toString()){
-                case "+0.25": caloriesNeeded *= 1.1; break;
-                case "+0.5": caloriesNeeded *= 1.21; break;
-                case "-0.25": caloriesNeeded *= 0.9; break;
-                case "-0.5": caloriesNeeded *= 0.79; break;
-            }
-            user.setCaloriesNeeded(caloriesNeeded);
-            if(updating){
-                updateRetrofit(user);
-            }else{
-                registerRetrofit(user);
+                int group1 = groupGender.getCheckedRadioButtonId();
+                RadioButton userGender = (RadioButton) findViewById(group1);
+                switch (userGender.getText().toString()) {
+                    case "Male":
+                        caloriesNeeded += 5;
+                        break;
+                    case "Female":
+                        caloriesNeeded -= 161;
+                        break;
+                }
+
+                int group2 = groupActivity.getCheckedRadioButtonId();
+                RadioButton userActivity = (RadioButton) findViewById(group2);
+                switch (userActivity.getText().toString()) {
+                    case "Sedentary (no exercise)":
+                        caloriesNeeded *= 1.2;
+                        break;
+                    case "Light (1-3 days a week)":
+                        caloriesNeeded *= 1.375;
+                        break;
+                    case "Moderate (3-5 days a week)":
+                        caloriesNeeded *= 1.55;
+                        break;
+                    case "Active (5-7 days a week)":
+                        caloriesNeeded *= 1.725;
+                        break;
+                }
+
+                int group3 = groupWeight.getCheckedRadioButtonId();
+                RadioButton userWeight = (RadioButton) findViewById(group3);
+                switch (userWeight.getText().toString()) {
+                    case "+0.25":
+                        caloriesNeeded *= 1.1;
+                        break;
+                    case "+0.5":
+                        caloriesNeeded *= 1.21;
+                        break;
+                    case "-0.25":
+                        caloriesNeeded *= 0.9;
+                        break;
+                    case "-0.5":
+                        caloriesNeeded *= 0.79;
+                        break;
+                }
+
+
+                user.setCaloriesNeeded(caloriesNeeded);
+                if (updating) {
+                    updateRetrofit(user);
+                } else {
+                    registerRetrofit(user);
+                }
             }
         });
     }
@@ -108,11 +140,11 @@ public class RegisterCaloriesActivity extends AppCompatActivity {
         call.enqueue(new Callback<UserDetail>() {
             @Override
             public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
-                if(response.code() == 200) {
+                if (response.code() == 200) {
                     switchToHome(response.body());
                     finish();
                     Toast.makeText(RegisterCaloriesActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(RegisterCaloriesActivity.this, "Email address or username already taken", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -133,10 +165,10 @@ public class RegisterCaloriesActivity extends AppCompatActivity {
         call.enqueue(new Callback<UserDetail>() {
             @Override
             public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
-                if(response.code() == 200) {
+                if (response.code() == 200) {
                     switchToLoginActivity();
                     Toast.makeText(RegisterCaloriesActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(RegisterCaloriesActivity.this, "Email address or username already taken", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -148,12 +180,12 @@ public class RegisterCaloriesActivity extends AppCompatActivity {
         });
     }
 
-    private void switchToLoginActivity(){
+    private void switchToLoginActivity() {
         Intent switchActivity = new Intent(this, MainActivity.class);
         startActivity(switchActivity);
     }
 
-    private void switchToHome(UserDetail user){
+    private void switchToHome(UserDetail user) {
         Intent switchActivity = new Intent(this, HomeActivity.class);
         switchActivity.putExtra("user", user);
         switchActivity.putExtra("update", true);

@@ -1,23 +1,22 @@
 package hr.fer.caloriecounter.ui;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
+
 import androidx.fragment.app.Fragment;
 
 import com.leo.searchablespinner.SearchableSpinner;
@@ -27,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,12 +38,13 @@ import hr.fer.caloriecounter.model.Food;
 import hr.fer.caloriecounter.model.Meal;
 import hr.fer.caloriecounter.model.UserDetail;
 import hr.fer.caloriecounter.model.enums.MealType;
+import hr.fer.caloriecounter.sqlite.CalorieCounterDbHelper;
 import lombok.NoArgsConstructor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 
 @NoArgsConstructor
 public class HomeFragment extends Fragment {
@@ -71,6 +71,8 @@ public class HomeFragment extends Fragment {
     private int caloriesConsumedDinner;
     private SearchableSpinner spinnerAllFood;
     private SearchableSpinner spinnerConsumedFood;
+    private CalorieCounterDbHelper dbHelper;
+    private ArrayList<String> allFoodList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -91,6 +93,14 @@ public class HomeFragment extends Fragment {
         caloriesConsumedDinner = 0;
         mealsToday = new ArrayList<>();
 
+        dbHelper = new CalorieCounterDbHelper(getContext());
+        allFoodList = new ArrayList<>();
+        Cursor cursor = dbHelper.fetchEntries();
+
+        while(cursor.moveToNext()){
+            allFoodList.add(cursor.getString(1) + "♥︎");
+        }
+        cursor.close();
         mealsRetrofit();
     }
 
@@ -126,7 +136,8 @@ public class HomeFragment extends Fragment {
         foodDinnerBtn = getView().findViewById(R.id.home_consumed_dinner);
 
         spinnerAllFood = new SearchableSpinner(getContext());
-        spinnerAllFood.setWindowTitle("Select a food to add");
+        spinnerAllFood.setSpinnerListItems(allFoodList);
+        spinnerAllFood.setWindowTitle("Select consumed food");
 
         spinnerConsumedFood = new SearchableSpinner(getContext());
         spinnerConsumedFood.setSearchViewVisibility(SearchableSpinner.SpinnerView.GONE);
@@ -139,7 +150,10 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
                     Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
-                    switchActivity.putExtra("foodName", selectedString);
+                    if(selectedString.contains("♥︎"))
+                        switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
+                    else
+                        switchActivity.putExtra("foodName", selectedString);
                     switchActivity.putExtra("user", user);
                     switchActivity.putExtra("date", String.valueOf(currentDate));
                     switchActivity.putExtra("type", "BREAKFAST");
@@ -154,7 +168,10 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
                     Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
-                    switchActivity.putExtra("foodName", selectedString);
+                    if(selectedString.contains("♥︎"))
+                        switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
+                    else
+                        switchActivity.putExtra("foodName", selectedString);
                     switchActivity.putExtra("user", user);
                     switchActivity.putExtra("date", String.valueOf(currentDate));
                     switchActivity.putExtra("type", "LUNCH");
@@ -169,7 +186,10 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
                     Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
-                    switchActivity.putExtra("foodName", selectedString);
+                    if(selectedString.contains("♥︎"))
+                        switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
+                    else
+                        switchActivity.putExtra("foodName", selectedString);
                     switchActivity.putExtra("user", user);
                     switchActivity.putExtra("date", String.valueOf(currentDate));
                     switchActivity.putExtra("type", "DINNER");
@@ -180,7 +200,7 @@ public class HomeFragment extends Fragment {
         });
 
         foodBreakfastBtn.setOnClickListener(view ->{
-            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.BREAKFAST).map(m -> m.getFood().getName() + " (" + m.getQuantity() * m.getFood().getCalories() + ")" ).collect(Collectors.toList())));
+            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.BREAKFAST).map(m -> m.getFood().getName() + " (" + (int) (m.getQuantity() * m.getFood().getCalories()) + ")" ).collect(Collectors.toList())));
 
             spinnerConsumedFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
@@ -194,7 +214,7 @@ public class HomeFragment extends Fragment {
         });
 
         foodLunchBtn.setOnClickListener(view ->{
-            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.LUNCH).map(m -> m.getFood().getName() + " (" + m.getQuantity() * m.getFood().getCalories() + ")" ).collect(Collectors.toList())));
+            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.LUNCH).map(m -> m.getFood().getName() + " (" + (int) (m.getQuantity() * m.getFood().getCalories()) + ")" ).collect(Collectors.toList())));
 
             spinnerConsumedFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
@@ -208,7 +228,7 @@ public class HomeFragment extends Fragment {
         });
 
         foodDinnerBtn.setOnClickListener(view ->{
-            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.DINNER).map(m -> m.getFood().getName() + " (" + m.getQuantity() * m.getFood().getCalories() + ")" ).collect(Collectors.toList())));
+            spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.DINNER).map(m -> m.getFood().getName() + " (" + (int) (m.getQuantity() * m.getFood().getCalories()) + ")" ).collect(Collectors.toList())));
 
             spinnerConsumedFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
@@ -283,7 +303,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
                 if(response.code() == 200){
-                    spinnerAllFood.setSpinnerListItems(new ArrayList<>(response.body().stream().map(Food::getName).collect(Collectors.toList())));
+                    ArrayList<String> helpList = new ArrayList<>(allFoodList);
+                    for (int i = 0; i < helpList.size(); i++) helpList.set(i, helpList.get(i).substring(0, helpList.get(i).length() - 2));
+                    allFoodList.addAll(response.body().stream().map(Food::getName).collect(Collectors.toList()));
+                    allFoodList.removeAll(helpList);
+
+                    spinnerAllFood.setSpinnerListItems(allFoodList);
                     initListeners();
                 }else{
                     System.out.println(response.code());

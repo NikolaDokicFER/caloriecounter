@@ -13,6 +13,16 @@
         android:textColor="@color/black"
         android:textSize="24sp" />
 
+    <ImageButton
+        android:id="@+id/food_favorite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_favorite_empty"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="50dp" />
+
+
     <TextView
         android:id="@+id/food_calories"
         android:layout_width="wrap_content"

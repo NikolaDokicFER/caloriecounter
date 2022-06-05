@@ -139,7 +139,7 @@
             android:id="@+id/register_weight_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter your height:"
+            android:text="Enter your weight:"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
