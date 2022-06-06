@@ -19,7 +19,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private EditText usernameText;
@@ -39,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         finishAffinity();
     }
 
-    private void initUI(){
+    private void initUI() {
         usernameText = findViewById(R.id.login_username);
         passwordText = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.login_button_login);
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         registerButton.setOnClickListener(view -> switchToRegister());
 
         loginButton.setOnClickListener(view -> {
-            if(validateUsername(usernameText.getText().toString()) && validatePassword(passwordText.getText().toString()))
+            if (validateUsername(usernameText.getText().toString()) && validatePassword(passwordText.getText().toString()))
                 loginRetrofit(usernameText.getText().toString(), passwordText.getText().toString());
         });
     }
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<UserDetail>() {
             @Override
             public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
-                if(response.code() == 200) {
+                if (response.code() == 200) {
                     SharedPreferences.Editor shEditor = SplashScreenActivity.sharedPreferences.edit();
                     shEditor.putBoolean("loggedIn", true);
                     Gson gson = new Gson();
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     shEditor.putString("User", json);
                     shEditor.apply();
                     switchToHome(response.body());
-                }else{
+                } else {
                     System.out.println(response.code());
                     Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
                 }
@@ -89,29 +88,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validateUsername(String username){
-        if(username.isEmpty()) {
+    private boolean validateUsername(String username) {
+        if (username.isEmpty()) {
             Toast.makeText(MainActivity.this, "Username is required", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(username.contains(" ")){
+        } else if (username.contains(" ")) {
             Toast.makeText(MainActivity.this, "Username: Remove space between characters", Toast.LENGTH_SHORT).show();
             return false;
-        }else return true;
+        } else return true;
     }
 
     private boolean validatePassword(String password) {
         if (password.isEmpty()) {
             Toast.makeText(MainActivity.this, "Password is required", Toast.LENGTH_SHORT).show();
             return false;
-        }else return true;
+        } else return true;
     }
 
-    private void switchToRegister(){
+    private void switchToRegister() {
         Intent switchActivity = new Intent(this, RegisterActivity.class);
         startActivity(switchActivity);
     }
 
-    private void switchToHome(UserDetail user){
+    private void switchToHome(UserDetail user) {
         Intent switchActivity = new Intent(this, HomeActivity.class);
         switchActivity.putExtra("user", user);
         startActivity(switchActivity);

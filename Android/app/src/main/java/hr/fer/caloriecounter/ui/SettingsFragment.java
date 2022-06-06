@@ -1,6 +1,5 @@
 package hr.fer.caloriecounter.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,9 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,12 +31,13 @@ public class SettingsFragment extends Fragment {
     private TextView usernameText;
     private TextView emailText;
     private Button progressBtn;
+    private Button graphsBtn;
     private Button signOutBtn;
     private Button updateBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mainView =  inflater.inflate(R.layout.fragment_settings, container, false);
+        mainView = inflater.inflate(R.layout.fragment_settings, container, false);
         return mainView;
     }
 
@@ -55,7 +52,7 @@ public class SettingsFragment extends Fragment {
         initListeners();
     }
 
-    private void initUI(){
+    private void initUI() {
         caloriesText = getActivity().findViewById(R.id.settings_calories);
         caloriesText.setText("Calories needed: " + String.valueOf(user.getCaloriesNeeded()));
 
@@ -75,22 +72,27 @@ public class SettingsFragment extends Fragment {
         emailText.setText("Email: " + user.getEmail());
 
         progressBtn = getActivity().findViewById(R.id.progress_button);
+        graphsBtn = getActivity().findViewById(R.id.settings_graphs_button);
         updateBtn = getActivity().findViewById(R.id.settings_update);
         signOutBtn = getActivity().findViewById(R.id.settings_sign_out);
     }
 
-    private void initListeners(){
+    private void initListeners() {
         progressBtn.setOnClickListener(view -> {
             switchToProgress();
         });
 
-        updateBtn.setOnClickListener(view ->{
+        graphsBtn.setOnClickListener(view -> {
+            switchToGraphs();
+        });
+
+        updateBtn.setOnClickListener(view -> {
             switchToCalories();
             initUI();
             initListeners();
         });
 
-        signOutBtn.setOnClickListener(view ->{
+        signOutBtn.setOnClickListener(view -> {
             SharedPreferences.Editor shEditor = SplashScreenActivity.sharedPreferences.edit();
             shEditor.putBoolean("loggedIn", false);
             shEditor.putString("User", "");
@@ -99,8 +101,14 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    private void switchToProgress(){
+    private void switchToProgress() {
         Intent switchActivity = new Intent(getContext(), ProgressActivity.class);
+        switchActivity.putExtra("user", user);
+        startActivity(switchActivity);
+    }
+
+    private void switchToGraphs() {
+        Intent switchActivity = new Intent(getContext(), GraphsActivity.class);
         switchActivity.putExtra("user", user);
         startActivity(switchActivity);
     }
@@ -112,7 +120,7 @@ public class SettingsFragment extends Fragment {
         startActivity(switchActivity);
     }
 
-    private void switchToLogin(){
+    private void switchToLogin() {
         Intent switchActivity = new Intent(getContext(), MainActivity.class);
         startActivity(switchActivity);
     }

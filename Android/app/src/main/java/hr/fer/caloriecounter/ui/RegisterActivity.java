@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,13 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import hr.fer.caloriecounter.R;
-import hr.fer.caloriecounter.api.RegisterApi;
 import hr.fer.caloriecounter.model.UserDetail;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText firstNameText;
@@ -44,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         initListeners();
     }
 
-    private void initUI(){
+    private void initUI() {
         firstNameText = findViewById(R.id.register_first_name);
         lastNameText = findViewById(R.id.register_last_name);
         emailText = findViewById(R.id.register_email);
@@ -54,9 +46,9 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.register_button);
     }
 
-    private void initListeners(){
+    private void initListeners() {
         registerButton.setOnClickListener(view -> {
-            if(validateUserName(usernameText.getText().toString()) && validateEmail(emailText.getText().toString()) && validatePassword(password1Text.getText().toString(), password2Text.getText().toString())){
+            if (validateUserName(usernameText.getText().toString()) && validateEmail(emailText.getText().toString()) && validatePassword(password1Text.getText().toString(), password2Text.getText().toString())) {
                 user = new UserDetail();
                 user.setFirstName(firstNameText.getText().toString());
                 user.setLastName(lastNameText.getText().toString());
@@ -69,47 +61,47 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validateUserName(String userName){
-        if(userName.isEmpty()) {
+    private boolean validateUserName(String userName) {
+        if (userName.isEmpty()) {
             Toast.makeText(RegisterActivity.this, "Username is required", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(userName.contains(" ")){
+        } else if (userName.contains(" ")) {
             Toast.makeText(RegisterActivity.this, "Username: Remove space between characters", Toast.LENGTH_SHORT).show();
             return false;
-        }else return true;
+        } else return true;
     }
 
-    private boolean validateEmail(String email){
-        if(email.isEmpty()) {
+    private boolean validateEmail(String email) {
+        if (email.isEmpty()) {
             Toast.makeText(RegisterActivity.this, "Email is required", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return true;
-        }else{
+        } else {
             Toast.makeText(RegisterActivity.this, "Invalid email address", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
 
-    private boolean validatePassword(String password, String password2){
+    private boolean validatePassword(String password, String password2) {
         Pattern pattern = Pattern.compile("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])");
         Matcher matcher = pattern.matcher(password);
-        if(password.isEmpty()) {
+        if (password.isEmpty()) {
             Toast.makeText(RegisterActivity.this, "Password is required", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(password.contains(" ")){
+        } else if (password.contains(" ")) {
             Toast.makeText(RegisterActivity.this, "Password: Remove space between characters", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(!matcher.find()){
+        } else if (!matcher.find()) {
             Toast.makeText(RegisterActivity.this, "Password needs to contain at least 1 lowercase letter, uppercase letter and number", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(password.length() < 8){
+        } else if (password.length() < 8) {
             Toast.makeText(RegisterActivity.this, "Password needs to be at least 8 characters long", Toast.LENGTH_LONG).show();
             return false;
-        }else if(!password.equals(password2)){
+        } else if (!password.equals(password2)) {
             Toast.makeText(RegisterActivity.this, "Passwords are not matching", Toast.LENGTH_LONG).show();
             return false;
-        }else{
+        } else {
             return true;
         }
     }

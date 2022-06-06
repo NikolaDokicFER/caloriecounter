@@ -17,6 +17,9 @@ public interface MealApi {
     @GET("api/meal/{userId}/{date}")
     Call<List<Meal>> getMeals(@Path("userId") Long userId, @Path("date") String date);
 
+    @GET("api/meal/{userId}")
+    Call<List<Meal>> getMealsByUser(@Path("userId") Long userId);
+
     @DELETE("api/meal/delete/{mealId}")
     Call<Void> deleteMeal(@Path("mealId") Long mealId);
 }

@@ -21,6 +21,11 @@
         <activity android:name=".ui.FoodDetailActivity" />
         <activity android:name=".ui.RegisterCaloriesActivity" />
         <activity android:name=".ui.ProgressActivity" />
+        <activity android:name=".ui.GraphsActivity" />
+        <activity android:name=".ui.graphs.MostConsumedGraphActivity" />
+        <activity android:name=".ui.graphs.MacrosGraphActivity" />
+        <activity android:name=".ui.graphs.MealTypeGraphActivity" />
+        <activity android:name=".ui.graphs.WeightGraphActivity" />
         <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true">

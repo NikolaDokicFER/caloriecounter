@@ -14,22 +14,23 @@ import hr.fer.caloriecounter.model.UserDetail;
 
 public class SplashScreenActivity extends AppCompatActivity {
     static SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        sharedPreferences = getPreferences( MODE_PRIVATE);
+        sharedPreferences = getPreferences(MODE_PRIVATE);
         boolean loggedIn = sharedPreferences.getBoolean("loggedIn", false);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(loggedIn){
+                if (loggedIn) {
                     Gson gson = new Gson();
                     String json = sharedPreferences.getString("User", "");
                     switchToHome(gson.fromJson(json, UserDetail.class));
-                }else{
+                } else {
                     switchToLogin();
                 }
             }
@@ -38,13 +39,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         getSupportActionBar().hide();
     }
 
-    private void switchToHome(UserDetail user){
+    private void switchToHome(UserDetail user) {
         Intent switchActivity = new Intent(this, HomeActivity.class);
         switchActivity.putExtra("user", user);
         startActivity(switchActivity);
     }
 
-    private void switchToLogin(){
+    private void switchToLogin() {
         Intent switchActivity = new Intent(this, MainActivity.class);
         startActivity(switchActivity);
     }

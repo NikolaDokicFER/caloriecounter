@@ -25,7 +25,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FoodDetailActivity extends AppCompatActivity {
     private Meal meal;
@@ -63,7 +62,7 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         dbHelper = new CalorieCounterDbHelper(this);
         Cursor cursor = dbHelper.fetchEntry(foodName);
-        if(cursor.getCount() == 1){
+        if (cursor.getCount() == 1) {
             cursor.moveToFirst();
             favorite = true;
             food = new Food();
@@ -84,7 +83,7 @@ public class FoodDetailActivity extends AppCompatActivity {
 
             initUI();
             initListeners();
-        }else{
+        } else {
             getFoodRetrofit();
         }
     }
@@ -131,17 +130,17 @@ public class FoodDetailActivity extends AppCompatActivity {
         quantity = findViewById(R.id.food_quantity);
         addButton = findViewById(R.id.food_add_btn);
         favoriteButton = findViewById(R.id.food_favorite_button);
-        if(favorite) favoriteButton.setImageResource(R.drawable.ic_favorite_full);
+        if (favorite) favoriteButton.setImageResource(R.drawable.ic_favorite_full);
         else favoriteButton.setImageResource(R.drawable.ic_favorite_empty);
     }
 
     private void initListeners() {
         favoriteButton.setOnClickListener(view -> {
-            if (favorite){
+            if (favorite) {
                 favoriteButton.setImageResource(R.drawable.ic_favorite_empty);
                 favorite = false;
                 dbHelper.deleteEntry(String.valueOf(food.getId()));
-            }else{
+            } else {
                 favoriteButton.setImageResource(R.drawable.ic_favorite_full);
                 favorite = true;
                 dbHelper.insert(food);
@@ -149,19 +148,25 @@ public class FoodDetailActivity extends AppCompatActivity {
         });
 
         addButton.setOnClickListener(view -> {
-            if (!quantity.getText().toString().equals("") && TextUtils.isDigitsOnly(quantity.getText())){
+            if (!quantity.getText().toString().equals("") && TextUtils.isDigitsOnly(quantity.getText())) {
                 meal = new Meal();
                 meal.setFood(food);
                 meal.setDate(date);
                 meal.setUser(user);
                 meal.setQuantity(Float.parseFloat(quantity.getText().toString()) * 0.01f);
-                switch (type){
-                    case "BREAKFAST": meal.setType(MealType.BREAKFAST); break;
-                    case "LUNCH": meal.setType(MealType.LUNCH); break;
-                    case "DINNER": meal.setType(MealType.DINNER); break;
+                switch (type) {
+                    case "BREAKFAST":
+                        meal.setType(MealType.BREAKFAST);
+                        break;
+                    case "LUNCH":
+                        meal.setType(MealType.LUNCH);
+                        break;
+                    case "DINNER":
+                        meal.setType(MealType.DINNER);
+                        break;
                 }
                 addMealRetrofit();
-            }else{
+            } else {
                 Toast.makeText(this, "Please enter qunatity", Toast.LENGTH_SHORT).show();
             }
         });
@@ -207,9 +212,9 @@ public class FoodDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback<Meal>() {
             @Override
             public void onResponse(Call<Meal> call, Response<Meal> response) {
-                if(response.code() == 200){
-                   switchToHomeActivity();
-                }else{
+                if (response.code() == 200) {
+                    switchToHomeActivity();
+                } else {
                     System.out.println(response.code());
                 }
             }
@@ -221,7 +226,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void switchToHomeActivity(){
+    private void switchToHomeActivity() {
         Intent switchActivity = new Intent(this, HomeActivity.class);
         switchActivity.putExtra("user", user);
         startActivity(switchActivity);

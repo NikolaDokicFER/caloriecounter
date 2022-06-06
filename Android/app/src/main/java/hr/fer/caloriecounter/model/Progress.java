@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Progress implements Comparable<Progress>{
+public class Progress implements Comparable<Progress> {
     private Long userId;
     private String date;
     private Float weight;
@@ -20,13 +20,13 @@ public class Progress implements Comparable<Progress>{
         String[] date1 = this.date.split("-");
         String[] date2 = other.date.split("-");
 
-        if(date1[0].compareTo(date2[0]) == 0){
-            if(date1[1].compareTo(date2[1]) == 0){
+        if (date1[0].compareTo(date2[0]) == 0) {
+            if (date1[1].compareTo(date2[1]) == 0) {
                 return date1[2].compareTo(date2[2]);
-            }else{
+            } else {
                 return date1[1].compareTo(date2[1]);
             }
-        }else{
+        } else {
             return date1[0].compareTo(date2[0]);
         }
     }

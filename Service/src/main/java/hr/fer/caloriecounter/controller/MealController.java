@@ -27,6 +27,11 @@ public class MealController {
         return this.mealService.getMeal(user, localDate);
     }
 
+    @GetMapping("{userId}")
+    public List<Meal> getMealByUser(@PathVariable("userId") User user){
+        return this.mealService.getMealByUser(user);
+    }
+
     @DeleteMapping("delete/{mealId}")
     public void deleteMeal(@PathVariable("mealId") Long mealId){
         this.mealService.deleteMeal(mealId);

@@ -55,7 +55,7 @@ public class CalorieCounterDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insert(Food food){
+    public void insert(Food food) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -75,31 +75,31 @@ public class CalorieCounterDbHelper extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME, null, values);
     }
 
-    public Cursor fetchEntries(){
+    public Cursor fetchEntries() {
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
-        if(db != null){
+        if (db != null) {
             cursor = db.rawQuery(query, null);
         }
 
         return cursor;
     }
 
-    public Cursor fetchEntry(String name){
+    public Cursor fetchEntry(String name) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_NAME + " = '" + name + "'";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
-        if(db != null){
+        if (db != null) {
             cursor = db.rawQuery(query, null);
         }
 
         return cursor;
     }
 
-    public void deleteEntry(String entryId){
+    public void deleteEntry(String entryId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         long result = db.delete(TABLE_NAME, "id=?", new String[]{entryId});

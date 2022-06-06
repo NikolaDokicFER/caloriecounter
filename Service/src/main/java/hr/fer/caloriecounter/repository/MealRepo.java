@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface MealRepo extends JpaRepository<Meal, Long> {
     Optional<List<Meal>> getByUserAndDate(User user, LocalDate date);
 
+    Optional<List<Meal>> getByUser(User user);
+
     boolean existsByUserIdAndFoodIdAndDateAndType(Long userId, Long foodId,LocalDate date, MealType type);
 
     Meal getByUserIdAndFoodIdAndDateAndType(Long userId, Long foodId,LocalDate date, MealType type);

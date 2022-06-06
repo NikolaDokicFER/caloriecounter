@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green_main"
+        android:text="CALORIE COUNTER"
+        android:textSize="35sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"/>
+
+    <Button
+        android:id="@+id/graphs_btn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/graphs_btn2"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/white"
+        android:text="Most consumed food"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/graphs_btn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:layout_centerVertical="true"
+        android:text="Macronutrients distribution"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/graphs_btn3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/graphs_btn2"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/white"
+        android:text="Type of meal consumed"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/graphs_btn4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/graphs_btn3"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/white"
+        android:text="Weight progress"
+        android:textColor="@color/black" />
+
+</RelativeLayout>

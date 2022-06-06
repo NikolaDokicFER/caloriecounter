@@ -28,7 +28,12 @@ public class MealService {
 
     public List<Meal> getMeal(User user, LocalDate date){
         return this.mealRepository.getByUserAndDate(user, date).orElseThrow(() ->
-                new MealNotFound("Meal not found"));
+                new MealNotFound("Meals not found"));
+    }
+
+    public List<Meal> getMealByUser(User user){
+        return this.mealRepository.getByUser(user).orElseThrow(() ->
+                new MealNotFound("Meals not found"));
     }
 
     public void deleteMeal(Long mealId){
