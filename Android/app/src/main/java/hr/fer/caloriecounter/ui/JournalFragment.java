@@ -69,6 +69,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
     private SearchableSpinner spinnerConsumedFood;
     private CalorieCounterDbHelper dbHelper;
     private ArrayList<String> allFoodList;
+    private ArrayList<String> faveFoodList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,10 +92,11 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
 
         dbHelper = new CalorieCounterDbHelper(getContext());
         allFoodList = new ArrayList<>();
+        faveFoodList = new ArrayList<>();
         Cursor cursor = dbHelper.fetchEntries();
 
         while (cursor.moveToNext()) {
-            allFoodList.add(cursor.getString(1) + "♥︎");
+            faveFoodList.add(cursor.getString(1) + "♥︎");
         }
         cursor.close();
         mealsRetrofit();
@@ -152,6 +154,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
             caloriesConsumedLunch = 0;
             caloriesConsumedDinner = 0;
             mealsToday = new ArrayList<>();
+            allFoodList = new ArrayList<>();
             mealsRetrofit();
         });
 
@@ -163,6 +166,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
             caloriesConsumedLunch = 0;
             caloriesConsumedDinner = 0;
             mealsToday = new ArrayList<>();
+            allFoodList = new ArrayList<>();
             mealsRetrofit();
         });
 
@@ -324,7 +328,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
                 if (response.code() == 200) {
-                    ArrayList<String> helpList = new ArrayList<>(allFoodList);
+                    ArrayList<String> helpList = new ArrayList<>(faveFoodList);
                     for (int i = 0; i < helpList.size(); i++)
                         helpList.set(i, helpList.get(i).substring(0, helpList.get(i).length() - 2));
                     allFoodList.addAll(response.body().stream().map(Food::getName).collect(Collectors.toList()));
@@ -388,6 +392,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         caloriesConsumedLunch = 0;
         caloriesConsumedDinner = 0;
         mealsToday = new ArrayList<>();
+        allFoodList = new ArrayList<>();
         mealsRetrofit();
     }
 }

@@ -46,8 +46,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:buttonTint="@color/white"
-                android:text="Male"
                 android:checked="true"
+                android:text="Male"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -90,6 +90,9 @@
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:hint="age"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textColorHint="@color/grey" />
@@ -121,6 +124,9 @@
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:hint="cm"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLines="1"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textColorHint="@color/grey" />
@@ -152,6 +158,9 @@
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:hint="kg"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLines="1"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textColorHint="@color/grey" />
@@ -188,8 +197,8 @@
                 android:layout_height="30dp"
                 android:backgroundTint="@color/white"
                 android:buttonTint="@color/white"
-                android:text="Sedentary (no exercise)"
                 android:checked="true"
+                android:text="Sedentary (no exercise)"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -278,8 +287,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:buttonTint="@color/white"
-                android:text="0"
                 android:checked="true"
+                android:text="0"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 

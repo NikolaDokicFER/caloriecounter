@@ -28,6 +28,9 @@
         android:background="@color/white"
         android:backgroundTint="@color/white"
         android:hint="Username"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLines="1"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textColorHint="@color/grey" />
@@ -42,7 +45,9 @@
         android:background="@color/white"
         android:backgroundTint="@color/white"
         android:hint="Password"
+        android:imeOptions="actionDone"
         android:inputType="textPassword"
+        android:maxLines="1"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textColorHint="@color/grey" />

@@ -68,7 +68,7 @@ public class MostConsumedGraphActivity extends AppCompatActivity {
             i++;
         }
 
-        BarDataSet barDataSet = new BarDataSet(visitors, "Food");
+        BarDataSet barDataSet = new BarDataSet(visitors, "");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(22f);
@@ -82,9 +82,8 @@ public class MostConsumedGraphActivity extends AppCompatActivity {
 
         XAxis xAxis = barChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labelNames));
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
         xAxis.setGranularity(1f);
-        xAxis.setTextSize(20f);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(false);
         xAxis.setLabelCount(labelNames.size());

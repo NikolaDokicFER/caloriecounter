@@ -1,10 +1,17 @@
 package hr.fer.caloriecounter.ui;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -31,6 +38,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         getSupportActionBar().hide();
         bottomNavigationView = findViewById(R.id.home_navigation);
+
+        if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            requestStoragePermission();
 
         bottomNavigationView.setOnItemSelectedListener(this);
         if (updated) bottomNavigationView.setSelectedItemId(R.id.icon_user);
@@ -68,5 +78,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
         }
         return false;
+    }
+
+    private void requestStoragePermission() {
+        ActivityCompat.requestPermissions(HomeActivity.this,
+                new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
     }
 }
