@@ -67,7 +67,7 @@ public class CalorieCounterDbHelper extends SQLiteOpenHelper {
         values.put(COLUMN_NAME_CARBS, food.getCarbohydrates());
         values.put(COLUMN_NAME_VITAMINA, food.getVitaminA());
         values.put(COLUMN_NAME_VITAMINC, food.getVitaminC());
-        values.put(COLUMN_NAME_IODINE, food.getIodine());
+        values.put(COLUMN_NAME_IODINE, food.getCholesterol());
         values.put(COLUMN_NAME_SALT, food.getSalt());
         values.put(COLUMN_NAME_CALCIUM, food.getCalcium());
         values.put(COLUMN_NAME_IRON, food.getIron());

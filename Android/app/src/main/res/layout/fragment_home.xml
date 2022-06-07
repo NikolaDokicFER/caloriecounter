@@ -36,6 +36,7 @@
         android:textColor="@color/black"
         android:textSize="40sp" />
 
+
     <RelativeLayout
         android:id="@+id/home_relative1"
         android:layout_width="wrap_content"
@@ -92,6 +93,45 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/home_relative2"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/kcal_consumed_protein"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consumed kcal:"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/kcal_consumed_carbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consumed kcal:"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_toEndOf="@id/kcal_consumed_protein"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/kcal_consumed_fat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consumed kcal:"
+            android:layout_toEndOf="@id/kcal_consumed_carbs"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_relative4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_relative3"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp">
 
         <TextView
@@ -119,17 +159,17 @@
         android:id="@+id/home_consumed_breakfast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/home_relative3"
+        android:layout_below="@id/home_relative4"
         android:backgroundTint="@color/white"
         android:layout_centerHorizontal="true"
         android:text="See consumed food"
         android:textColor="#03c6fc"/>
 
     <RelativeLayout
-        android:id="@+id/home_relative4"
+        android:id="@+id/home_relative5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/home_relative3"
+        android:layout_below="@id/home_relative4"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp">
 
@@ -158,17 +198,17 @@
         android:id="@+id/home_consumed_lunch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/home_relative4"
+        android:layout_below="@id/home_relative5"
         android:backgroundTint="@color/white"
         android:layout_centerHorizontal="true"
         android:text="See consumed food"
         android:textColor="#03c6fc"/>
 
     <RelativeLayout
-        android:id="@+id/home_relative5"
+        android:id="@+id/home_relative6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/home_relative4"
+        android:layout_below="@id/home_relative5"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp">
 
@@ -196,7 +236,7 @@
         android:id="@+id/home_consumed_dinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/home_relative5"
+        android:layout_below="@id/home_relative6"
         android:backgroundTint="@color/white"
         android:layout_centerHorizontal="true"
         android:text="See consumed food"

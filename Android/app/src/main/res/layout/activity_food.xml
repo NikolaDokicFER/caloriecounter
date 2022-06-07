@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:padding="7dp"
-                android:text="In 100g"
+                android:text="mg in 100g"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </TableRow>
@@ -154,12 +154,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:padding="7dp"
-                android:text="Iodine"
+                android:text="Cholesterol"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/food_iodine"
+                android:id="@+id/food_cholesterol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:padding="7dp"
-                android:text="Salt"
+                android:text="Sodium"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -220,7 +220,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:padding="7dp"
-                android:text="Salt"
+                android:text="Iron"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 

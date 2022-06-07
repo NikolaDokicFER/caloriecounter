@@ -44,7 +44,7 @@ public class Food {
     private Float vitaminC;
 
     @Column
-    private Float iodine;
+    private Float cholesterol;
 
     @Column
     private Float calcium;

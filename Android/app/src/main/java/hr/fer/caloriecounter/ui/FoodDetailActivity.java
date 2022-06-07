@@ -40,7 +40,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     private TextView proteinText;
     private TextView vitaminAText;
     private TextView vitaminCText;
-    private TextView iodineText;
+    private TextView cholesterolText;
     private TextView saltText;
     private TextView calciumText;
     private TextView ironText;
@@ -74,7 +74,7 @@ public class FoodDetailActivity extends AppCompatActivity {
             food.setCarbohydrates(Float.parseFloat(cursor.getString(5)));
             food.setVitaminA(Float.parseFloat(cursor.getString(6)));
             food.setVitaminC(Float.parseFloat(cursor.getString(7)));
-            food.setIodine(Float.parseFloat(cursor.getString(8)));
+            food.setCholesterol(Float.parseFloat(cursor.getString(8)));
             food.setSalt(Float.parseFloat(cursor.getString(9)));
             food.setCalcium(Float.parseFloat(cursor.getString(10)));
             food.setIron(Float.parseFloat(cursor.getString(11)));
@@ -115,8 +115,8 @@ public class FoodDetailActivity extends AppCompatActivity {
         vitaminCText = findViewById(R.id.food_vitamin_c);
         vitaminCText.setText(String.valueOf(food.getVitaminA()));
 
-        iodineText = findViewById(R.id.food_iodine);
-        iodineText.setText(String.valueOf(food.getIodine()));
+        cholesterolText = findViewById(R.id.food_cholesterol);
+        cholesterolText.setText(String.valueOf(food.getCholesterol()));
 
         saltText = findViewById(R.id.food_salt);
         saltText.setText(String.valueOf(food.getSalt()));
@@ -185,7 +185,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                     food = response.body();
                     if (food.getVitaminA() == null) food.setVitaminA(0.0f);
                     if (food.getVitaminC() == null) food.setVitaminC(0.0f);
-                    if (food.getIodine() == null) food.setIodine(0.0f);
+                    if (food.getCholesterol() == null) food.setCholesterol(0.0f);
                     if (food.getSalt() == null) food.setSalt(0.0f);
                     if (food.getCalcium() == null) food.setCalcium(0.0f);
                     if (food.getIron() == null) food.setIron(0.0f);

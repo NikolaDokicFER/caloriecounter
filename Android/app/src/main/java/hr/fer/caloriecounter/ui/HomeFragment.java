@@ -54,6 +54,9 @@ public class HomeFragment extends Fragment {
     private TextView caloriesLeft;
     private TextView caloriesRecommended;
     private TextView caloriesConsumed;
+    private TextView consumedProteinText;
+    private TextView consumedFatText;
+    private TextView consumedCarbsText;
     private TextView dateView;
     private TextView breakfastCalories;
     private TextView lunchCalories;
@@ -68,6 +71,9 @@ public class HomeFragment extends Fragment {
     private int caloriesConsumedBreakfast;
     private int caloriesConsumedLunch;
     private int caloriesConsumedDinner;
+    private int consumedProtein;
+    private int consumedFat;
+    private int consumedCarbs;
     private SearchableSpinner spinnerAllFood;
     private SearchableSpinner spinnerConsumedFood;
     private CalorieCounterDbHelper dbHelper;
@@ -116,6 +122,19 @@ public class HomeFragment extends Fragment {
 
         caloriesConsumed = getView().findViewById(R.id.kcal_consumed_value);
         caloriesConsumed.setText(String.valueOf(caloriesConsumedDay));
+
+        System.out.println(consumedFat);
+        consumedProteinText = getView().findViewById(R.id.kcal_consumed_protein);
+        if((consumedProtein + consumedFat + consumedCarbs) != 0) consumedProteinText.setText("Protein: \n     " + String.valueOf((int) ((float) consumedProtein / (float) (consumedProtein + consumedFat + consumedCarbs) * 100)) + "%");
+        else consumedProteinText.setText("Protein: \n     0");
+
+        consumedFatText = getView().findViewById(R.id.kcal_consumed_fat);
+        if((consumedProtein + consumedFat + consumedCarbs) != 0) consumedFatText.setText("Fat: \n " + String.valueOf((int) ((float) consumedFat / (float) (consumedProtein + consumedFat + consumedCarbs) * 100)) + "%");
+        else consumedFatText.setText("Fat: \n   0");
+
+        consumedCarbsText = getView().findViewById(R.id.kcal_consumed_carbs);
+        if((consumedProtein + consumedFat + consumedCarbs) != 0) consumedCarbsText.setText("Carbs: \n   " + String.valueOf((int) ((float) consumedCarbs / (float) (consumedProtein + consumedFat + consumedCarbs) * 100)) + "%");
+        else consumedCarbsText.setText("Carbs: \n    0");
 
         breakfastCalories = getView().findViewById(R.id.home_breakfast_text);
         breakfastCalories.setText("  BREAKFAST\n  consumed calories: " + caloriesConsumedBreakfast);
@@ -343,6 +362,9 @@ public class HomeFragment extends Fragment {
     private void countConsumedCalories() {
         for (Meal m : mealsToday) {
             caloriesConsumedDay += m.getFood().getCalories() * m.getQuantity();
+            consumedCarbs += m.getFood().getCarbohydrates() * m.getQuantity();
+            consumedFat += m.getFood().getFat() * m.getQuantity();
+            consumedProtein += m.getFood().getProteins() * m.getQuantity();
             switch (m.getType()) {
                 case BREAKFAST:
                     caloriesConsumedBreakfast += m.getFood().getCalories() * m.getQuantity();

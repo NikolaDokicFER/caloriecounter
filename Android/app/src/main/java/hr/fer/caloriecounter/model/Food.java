@@ -18,7 +18,7 @@ public class Food {
     private Float carbohydrates;
     private Float vitaminA;
     private Float vitaminC;
-    private Float iodine;
+    private Float cholesterol;
     private Float calcium;
     private Float salt;
     private Float iron;
