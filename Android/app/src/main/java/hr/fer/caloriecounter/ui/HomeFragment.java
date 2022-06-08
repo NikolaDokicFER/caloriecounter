@@ -47,6 +47,7 @@ import retrofit2.Retrofit;
 
 @NoArgsConstructor
 public class HomeFragment extends Fragment {
+    private View view;
     private Bundle bundle;
     private UserDetail user;
     private LocalDate currentDate;
@@ -81,7 +82,8 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 
     @Override
@@ -96,6 +98,9 @@ public class HomeFragment extends Fragment {
         caloriesConsumedBreakfast = 0;
         caloriesConsumedLunch = 0;
         caloriesConsumedDinner = 0;
+        consumedFat = 0;
+        consumedCarbs = 0;
+        consumedProtein = 0;
         mealsToday = new ArrayList<>();
 
         dbHelper = new CalorieCounterDbHelper(getContext());
@@ -111,53 +116,55 @@ public class HomeFragment extends Fragment {
 
 
     private void initUI() {
-        dateView = getView().findViewById(R.id.home_date);
+        dateView = view.findViewById(R.id.home_date);
         dateView.setText(currentDate.toString());
 
-        caloriesLeft = getView().findViewById(R.id.daily_calories);
+        caloriesLeft = view.findViewById(R.id.daily_calories);
         caloriesLeft.setText(String.valueOf(user.getCaloriesNeeded() - caloriesConsumedDay));
 
-        caloriesRecommended = getView().findViewById(R.id.kcal_recommended_value);
+        caloriesRecommended = view.findViewById(R.id.kcal_recommended_value);
         caloriesRecommended.setText(String.valueOf(user.getCaloriesNeeded()));
 
-        caloriesConsumed = getView().findViewById(R.id.kcal_consumed_value);
+        caloriesConsumed = view.findViewById(R.id.kcal_consumed_value);
         caloriesConsumed.setText(String.valueOf(caloriesConsumedDay));
 
-        System.out.println(consumedFat);
-        consumedProteinText = getView().findViewById(R.id.kcal_consumed_protein);
-        if((consumedProtein + consumedFat + consumedCarbs) != 0) consumedProteinText.setText("Protein: \n     " + String.valueOf((int) ((float) consumedProtein / (float) (consumedProtein + consumedFat + consumedCarbs) * 100)) + "%");
-        else consumedProteinText.setText("Protein: \n     0");
+        consumedProteinText = view.findViewById(R.id.kcal_consumed_protein);
+        if ((consumedProtein + consumedFat + consumedCarbs) != 0)
+            consumedProteinText.setText("Protein:\n   " + consumedProtein + "g");
+        else consumedProteinText.setText("Protein: \n    0g");
 
-        consumedFatText = getView().findViewById(R.id.kcal_consumed_fat);
-        if((consumedProtein + consumedFat + consumedCarbs) != 0) consumedFatText.setText("Fat: \n " + String.valueOf((int) ((float) consumedFat / (float) (consumedProtein + consumedFat + consumedCarbs) * 100)) + "%");
-        else consumedFatText.setText("Fat: \n   0");
+        consumedFatText = view.findViewById(R.id.kcal_consumed_fat);
+        if ((consumedProtein + consumedFat + consumedCarbs) != 0)
+            consumedFatText.setText("Fat:\n" + consumedFat + "g");
+        else consumedFatText.setText("Fat:\n 0g");
 
-        consumedCarbsText = getView().findViewById(R.id.kcal_consumed_carbs);
-        if((consumedProtein + consumedFat + consumedCarbs) != 0) consumedCarbsText.setText("Carbs: \n   " + String.valueOf((int) ((float) consumedCarbs / (float) (consumedProtein + consumedFat + consumedCarbs) * 100)) + "%");
-        else consumedCarbsText.setText("Carbs: \n    0");
+        consumedCarbsText = view.findViewById(R.id.kcal_consumed_carbs);
+        if ((consumedProtein + consumedFat + consumedCarbs) != 0)
+            consumedCarbsText.setText("Carbs: \n  " + consumedCarbs + "g");
+        else consumedCarbsText.setText("Carbs: \n   0g");
 
-        breakfastCalories = getView().findViewById(R.id.home_breakfast_text);
+        breakfastCalories = view.findViewById(R.id.home_breakfast_text);
         breakfastCalories.setText("  BREAKFAST\n  consumed calories: " + caloriesConsumedBreakfast);
 
-        lunchCalories = getView().findViewById(R.id.home_lunch_text);
+        lunchCalories = view.findViewById(R.id.home_lunch_text);
         lunchCalories.setText("  LUNCH\n  consumed calories: " + caloriesConsumedLunch);
 
-        dinnerCalories = getView().findViewById(R.id.home_dinner_text);
+        dinnerCalories = view.findViewById(R.id.home_dinner_text);
         dinnerCalories.setText("  DINNER\n  consumed calories: " + caloriesConsumedDinner);
 
-        addBreakfastBtn = getView().findViewById(R.id.home_breakfast_button);
-        addLunchBtn = getView().findViewById(R.id.home_lunch_button);
-        addDinnerBtn = getView().findViewById(R.id.home_dinner_button);
+        addBreakfastBtn = view.findViewById(R.id.home_breakfast_button);
+        addLunchBtn = view.findViewById(R.id.home_lunch_button);
+        addDinnerBtn = view.findViewById(R.id.home_dinner_button);
 
-        foodBreakfastBtn = getView().findViewById(R.id.home_consumed_breakfast);
-        foodLunchBtn = getView().findViewById(R.id.home_consumed_lunch);
-        foodDinnerBtn = getView().findViewById(R.id.home_consumed_dinner);
+        foodBreakfastBtn = view.findViewById(R.id.home_consumed_breakfast);
+        foodLunchBtn = view.findViewById(R.id.home_consumed_lunch);
+        foodDinnerBtn = view.findViewById(R.id.home_consumed_dinner);
 
-        spinnerAllFood = new SearchableSpinner(getContext());
+        spinnerAllFood = new SearchableSpinner(view.getContext());
         spinnerAllFood.setSpinnerListItems(allFoodList);
         spinnerAllFood.setWindowTitle("Select consumed food");
 
-        spinnerConsumedFood = new SearchableSpinner(getContext());
+        spinnerConsumedFood = new SearchableSpinner(view.getContext());
         spinnerConsumedFood.setSearchViewVisibility(SearchableSpinner.SpinnerView.GONE);
         spinnerConsumedFood.setWindowTitle("Select a meal to remove");
     }
@@ -167,7 +174,7 @@ public class HomeFragment extends Fragment {
             spinnerAllFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
-                    Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
+                    Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
                     if (selectedString.contains("♥︎"))
                         switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
                     else
@@ -185,7 +192,7 @@ public class HomeFragment extends Fragment {
             spinnerAllFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
-                    Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
+                    Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
                     if (selectedString.contains("♥︎"))
                         switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
                     else
@@ -203,7 +210,7 @@ public class HomeFragment extends Fragment {
             spinnerAllFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
-                    Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
+                    Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
                     if (selectedString.contains("♥︎"))
                         switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
                     else
@@ -296,7 +303,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(getContext(), "Meal has been removed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Meal has been removed", Toast.LENGTH_SHORT).show();
                     getActivity().finish();
                     startActivity(getActivity().getIntent());
                 } else {
@@ -342,7 +349,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void confirmDelete(Long mealId, String foodName) {
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
+        AlertDialog dialog = new AlertDialog.Builder(view.getContext())
                 .setTitle("Remove a meal")
                 .setMessage("Do you want to remove this meal: " + foodName)
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {

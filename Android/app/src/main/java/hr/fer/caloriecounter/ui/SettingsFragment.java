@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class SettingsFragment extends Fragment {
-    private View mainView;
+    private View view;
     private Bundle bundle;
     private UserDetail user;
     private TextView caloriesText;
@@ -37,8 +37,8 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.fragment_settings, container, false);
-        return mainView;
+        view = inflater.inflate(R.layout.fragment_settings, container, false);
+        return view;
     }
 
     @Override
@@ -53,28 +53,28 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initUI() {
-        caloriesText = getActivity().findViewById(R.id.settings_calories);
+        caloriesText = view.findViewById(R.id.settings_calories);
         caloriesText.setText("Calories needed: " + String.valueOf(user.getCaloriesNeeded()));
 
-        weightText = getActivity().findViewById(R.id.settings_weight);
+        weightText = view.findViewById(R.id.settings_weight);
         weightText.setText("Current weight: " + String.valueOf(user.getWeight()));
 
-        firstNameText = getActivity().findViewById(R.id.settings_first_name);
+        firstNameText = view.findViewById(R.id.settings_first_name);
         firstNameText.setText("First name:" + user.getFirstName());
 
-        lastNameText = getActivity().findViewById(R.id.settings_last_name);
+        lastNameText = view.findViewById(R.id.settings_last_name);
         lastNameText.setText("Last name: " + user.getLastName());
 
-        usernameText = getActivity().findViewById(R.id.settings_username);
+        usernameText = view.findViewById(R.id.settings_username);
         usernameText.setText("Username: " + user.getUsername());
 
-        emailText = getActivity().findViewById(R.id.settings_email);
+        emailText = view.findViewById(R.id.settings_email);
         emailText.setText("Email: " + user.getEmail());
 
-        progressBtn = getActivity().findViewById(R.id.progress_button);
-        graphsBtn = getActivity().findViewById(R.id.settings_graphs_button);
-        updateBtn = getActivity().findViewById(R.id.settings_update);
-        signOutBtn = getActivity().findViewById(R.id.settings_sign_out);
+        progressBtn = view.findViewById(R.id.progress_button);
+        graphsBtn = view.findViewById(R.id.settings_graphs_button);
+        updateBtn = view.findViewById(R.id.settings_update);
+        signOutBtn = view.findViewById(R.id.settings_sign_out);
     }
 
     private void initListeners() {
@@ -102,26 +102,26 @@ public class SettingsFragment extends Fragment {
     }
 
     private void switchToProgress() {
-        Intent switchActivity = new Intent(getContext(), ProgressActivity.class);
+        Intent switchActivity = new Intent(view.getContext(), ProgressActivity.class);
         switchActivity.putExtra("user", user);
         startActivity(switchActivity);
     }
 
     private void switchToGraphs() {
-        Intent switchActivity = new Intent(getContext(), GraphsActivity.class);
+        Intent switchActivity = new Intent(view.getContext(), GraphsActivity.class);
         switchActivity.putExtra("user", user);
         startActivity(switchActivity);
     }
 
     private void switchToCalories() {
-        Intent switchActivity = new Intent(getContext(), RegisterCaloriesActivity.class);
+        Intent switchActivity = new Intent(view.getContext(), RegisterCaloriesActivity.class);
         switchActivity.putExtra("user", user);
         switchActivity.putExtra("updating", true);
         startActivity(switchActivity);
     }
 
     private void switchToLogin() {
-        Intent switchActivity = new Intent(getContext(), MainActivity.class);
+        Intent switchActivity = new Intent(view.getContext(), MainActivity.class);
         startActivity(switchActivity);
     }
 }

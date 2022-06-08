@@ -15,6 +15,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import hr.fer.caloriecounter.NetworkClient;
@@ -51,6 +52,9 @@ public class WeightGraphActivity extends AppCompatActivity {
         ArrayList<String> labelNames = new ArrayList<>();
 
         int i = 0;
+
+        Collections.sort(this.progressList);
+        Collections.reverse(this.progressList);
         for (Progress p : progressList) {
             visitors.add(new Entry(i, p.getWeight()));
             labelNames.add(p.getDate().substring(5));

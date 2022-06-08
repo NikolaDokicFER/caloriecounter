@@ -25,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import hr.fer.caloriecounter.NetworkClient;
@@ -44,6 +45,7 @@ import retrofit2.Retrofit;
 
 @NoArgsConstructor
 public class JournalFragment extends Fragment implements DatePickerFragment.IDateSetListener {
+    private View view;
     private Bundle bundle;
     private UserDetail user;
     private LocalDate selectedDate;
@@ -73,7 +75,8 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_journal, container, false);
+        view =  inflater.inflate(R.layout.fragment_journal, container, false);
+        return view;
     }
 
     @Override
@@ -103,37 +106,37 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
     }
 
     private void initUI() {
-        dateView = getView().findViewById(R.id.home_date);
+        dateView = view.findViewById(R.id.home_date);
         dateView.setText(selectedDate.toString());
 
-        caloriesConsumed = getView().findViewById(R.id.kcal_consumed_value);
+        caloriesConsumed = view.findViewById(R.id.kcal_consumed_value);
         caloriesConsumed.setText(String.valueOf(caloriesConsumedDay));
 
-        breakfastCalories = getView().findViewById(R.id.home_breakfast_text);
+        breakfastCalories = view.findViewById(R.id.home_breakfast_text);
         breakfastCalories.setText("  BREAKFAST\n  consumed calories: " + caloriesConsumedBreakfast);
 
-        lunchCalories = getView().findViewById(R.id.home_lunch_text);
+        lunchCalories = view.findViewById(R.id.home_lunch_text);
         lunchCalories.setText("  LUNCH\n  consumed calories: " + caloriesConsumedLunch);
 
-        dinnerCalories = getView().findViewById(R.id.home_dinner_text);
+        dinnerCalories = view.findViewById(R.id.home_dinner_text);
         dinnerCalories.setText("  DINNER\n  consumed calories: " + caloriesConsumedDinner);
 
-        addBreakfastBtn = getView().findViewById(R.id.home_breakfast_button);
-        addLunchBtn = getView().findViewById(R.id.home_lunch_button);
-        addDinnerBtn = getView().findViewById(R.id.home_dinner_button);
+        addBreakfastBtn = view.findViewById(R.id.home_breakfast_button);
+        addLunchBtn = view.findViewById(R.id.home_lunch_button);
+        addDinnerBtn = view.findViewById(R.id.home_dinner_button);
 
-        forwardDateBtn = getView().findViewById(R.id.date_forward);
-        backDateBtn = getView().findViewById(R.id.date_back);
+        forwardDateBtn = view.findViewById(R.id.date_forward);
+        backDateBtn = view.findViewById(R.id.date_back);
 
-        foodBreakfastBtn = getView().findViewById(R.id.home_consumed_breakfast);
-        foodLunchBtn = getView().findViewById(R.id.home_consumed_lunch);
-        foodDinnerBtn = getView().findViewById(R.id.home_consumed_dinner);
+        foodBreakfastBtn = view.findViewById(R.id.home_consumed_breakfast);
+        foodLunchBtn = view.findViewById(R.id.home_consumed_lunch);
+        foodDinnerBtn = view.findViewById(R.id.home_consumed_dinner);
 
-        spinnerAllFood = new SearchableSpinner(getContext());
+        spinnerAllFood = new SearchableSpinner(view.getContext());
         spinnerAllFood.setSpinnerListItems(allFoodList);
         spinnerAllFood.setWindowTitle("Select a food to add");
 
-        spinnerConsumedFood = new SearchableSpinner(getContext());
+        spinnerConsumedFood = new SearchableSpinner(view.getContext());
         spinnerConsumedFood.setSearchViewVisibility(SearchableSpinner.SpinnerView.GONE);
         spinnerConsumedFood.setWindowTitle("Select a meal to remove");
     }
@@ -174,7 +177,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
             spinnerAllFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
-                    Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
+                    Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
                     if (selectedString.contains("♥︎"))
                         switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
                     else
@@ -192,7 +195,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
             spinnerAllFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
-                    Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
+                    Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
                     if (selectedString.contains("♥︎"))
                         switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
                     else
@@ -210,7 +213,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
             spinnerAllFood.setOnItemSelectListener(new OnItemSelectListener() {
                 @Override
                 public void setOnItemSelectListener(int position, @NotNull String selectedString) {
-                    Intent switchActivity = new Intent(getContext(), FoodDetailActivity.class);
+                    Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
                     if (selectedString.contains("♥︎"))
                         switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
                     else
@@ -303,7 +306,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(getContext(), "Meal has been removed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Meal has been removed", Toast.LENGTH_SHORT).show();
                     getActivity().finish();
                     startActivity(getActivity().getIntent());
                 } else {
@@ -349,7 +352,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
     }
 
     private void confirmDelete(Long mealId, String foodName) {
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
+        AlertDialog dialog = new AlertDialog.Builder(view.getContext())
                 .setTitle("Remove a meal")
                 .setMessage("Do you want to remove this meal: " + foodName)
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {

@@ -1,6 +1,5 @@
 package hr.fer.caloriecounter;
 
-import hr.fer.caloriecounter.ui.MainActivity;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
