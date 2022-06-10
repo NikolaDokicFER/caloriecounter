@@ -72,9 +72,7 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
     }
 
     private void initListeners() {
-        addButton.setOnClickListener(view -> {
-            addProgressDialog();
-        });
+        addButton.setOnClickListener(view -> addProgressDialog());
     }
 
     private void addProgressDialog() {
@@ -92,9 +90,7 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         DatePickerFragment newFragemnt = new DatePickerFragment();
         ((DatePickerFragment) newFragemnt).setIDateSetListener(this);
 
-        dateButton.setOnClickListener(view -> {
-            newFragemnt.show(getSupportFragmentManager(), "datePicker");
-        });
+        dateButton.setOnClickListener(view -> newFragemnt.show(getSupportFragmentManager(), "datePicker"));
 
         photoButton.setOnClickListener(view -> {
             photoPicker.launch("image/*");

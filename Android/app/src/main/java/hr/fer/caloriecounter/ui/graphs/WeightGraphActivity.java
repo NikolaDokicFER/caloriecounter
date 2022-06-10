@@ -54,7 +54,7 @@ public class WeightGraphActivity extends AppCompatActivity {
         int i = 0;
 
         Collections.sort(this.progressList);
-        Collections.reverse(this.progressList);
+
         for (Progress p : progressList) {
             visitors.add(new Entry(i, p.getWeight()));
             labelNames.add(p.getDate().substring(5));

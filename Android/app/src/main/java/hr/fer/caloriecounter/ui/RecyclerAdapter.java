@@ -50,12 +50,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecyclerAdapter.RecyclerViewHolder holder, int position) {
-        holder.dateText.setText("Date: " + String.valueOf(progressList.get(position).getDate()));
-        holder.weightText.setText("Weight: " + String.valueOf(progressList.get(position).getWeight()) + "kg");
+        holder.dateText.setText("Date: " + progressList.get(position).getDate());
+        holder.weightText.setText("Weight: " + progressList.get(position).getWeight() + "kg");
 
-        holder.itemView.setOnClickListener(view -> {
-            addPhotoDialog(position);
-        });
+        holder.itemView.setOnClickListener(view -> addPhotoDialog(position));
     }
 
     @Override

@@ -1,7 +1,6 @@
 package hr.fer.caloriecounter.ui;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,14 +17,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.leo.searchablespinner.SearchableSpinner;
-import com.leo.searchablespinner.interfaces.OnItemSelectListener;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import hr.fer.caloriecounter.NetworkClient;
@@ -145,9 +142,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         DatePickerFragment newFragemnt = new DatePickerFragment();
         ((DatePickerFragment) newFragemnt).setIDateSetListener(this);
 
-        dateView.setOnClickListener(view -> {
-            newFragemnt.show(getActivity().getSupportFragmentManager(), "datePicker");
-        });
+        dateView.setOnClickListener(view -> newFragemnt.show(getActivity().getSupportFragmentManager(), "datePicker"));
 
         backDateBtn.setOnClickListener(view -> {
             selectedDate = selectedDate.minusDays(1);
@@ -174,55 +169,46 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         });
 
         addBreakfastBtn.setOnClickListener(view -> {
-            spinnerAllFood.setOnItemSelectListener(new OnItemSelectListener() {
-                @Override
-                public void setOnItemSelectListener(int position, @NotNull String selectedString) {
-                    Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
-                    if (selectedString.contains("♥︎"))
-                        switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
-                    else
-                        switchActivity.putExtra("foodName", selectedString);
-                    switchActivity.putExtra("user", user);
-                    switchActivity.putExtra("date", String.valueOf(selectedDate));
-                    switchActivity.putExtra("type", "BREAKFAST");
-                    startActivity(switchActivity);
-                }
+            spinnerAllFood.setOnItemSelectListener((position, selectedString) -> {
+                Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
+                if (selectedString.contains("♥︎"))
+                    switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
+                else
+                    switchActivity.putExtra("foodName", selectedString);
+                switchActivity.putExtra("user", user);
+                switchActivity.putExtra("date", String.valueOf(selectedDate));
+                switchActivity.putExtra("type", "BREAKFAST");
+                startActivity(switchActivity);
             });
             spinnerAllFood.show();
         });
 
         addLunchBtn.setOnClickListener(view -> {
-            spinnerAllFood.setOnItemSelectListener(new OnItemSelectListener() {
-                @Override
-                public void setOnItemSelectListener(int position, @NotNull String selectedString) {
-                    Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
-                    if (selectedString.contains("♥︎"))
-                        switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
-                    else
-                        switchActivity.putExtra("foodName", selectedString);
-                    switchActivity.putExtra("user", user);
-                    switchActivity.putExtra("date", String.valueOf(selectedDate));
-                    switchActivity.putExtra("type", "LUNCH");
-                    startActivity(switchActivity);
-                }
+            spinnerAllFood.setOnItemSelectListener((position, selectedString) -> {
+                Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
+                if (selectedString.contains("♥︎"))
+                    switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
+                else
+                    switchActivity.putExtra("foodName", selectedString);
+                switchActivity.putExtra("user", user);
+                switchActivity.putExtra("date", String.valueOf(selectedDate));
+                switchActivity.putExtra("type", "LUNCH");
+                startActivity(switchActivity);
             });
             spinnerAllFood.show();
         });
 
         addDinnerBtn.setOnClickListener(view -> {
-            spinnerAllFood.setOnItemSelectListener(new OnItemSelectListener() {
-                @Override
-                public void setOnItemSelectListener(int position, @NotNull String selectedString) {
-                    Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
-                    if (selectedString.contains("♥︎"))
-                        switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
-                    else
-                        switchActivity.putExtra("foodName", selectedString);
-                    switchActivity.putExtra("user", user);
-                    switchActivity.putExtra("date", String.valueOf(selectedDate));
-                    switchActivity.putExtra("type", "DINNER");
-                    startActivity(switchActivity);
-                }
+            spinnerAllFood.setOnItemSelectListener((position, selectedString) -> {
+                Intent switchActivity = new Intent(view.getContext(), FoodDetailActivity.class);
+                if (selectedString.contains("♥︎"))
+                    switchActivity.putExtra("foodName", selectedString.substring(0, selectedString.length() - 2));
+                else
+                    switchActivity.putExtra("foodName", selectedString);
+                switchActivity.putExtra("user", user);
+                switchActivity.putExtra("date", String.valueOf(selectedDate));
+                switchActivity.putExtra("type", "DINNER");
+                startActivity(switchActivity);
             });
             spinnerAllFood.show();
         });
@@ -230,12 +216,9 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         foodBreakfastBtn.setOnClickListener(view -> {
             spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.BREAKFAST).map(m -> m.getFood().getName() + " (" + (int) (m.getQuantity() * m.getFood().getCalories()) + ")").collect(Collectors.toList())));
 
-            spinnerConsumedFood.setOnItemSelectListener(new OnItemSelectListener() {
-                @Override
-                public void setOnItemSelectListener(int i, @NotNull String s) {
-                    Meal meal = mealsToday.stream().filter(m -> m.getType() == MealType.BREAKFAST).collect(Collectors.toList()).get(i);
-                    confirmDelete(meal.getId(), meal.getFood().getName());
-                }
+            spinnerConsumedFood.setOnItemSelectListener((i, s) -> {
+                Meal meal = mealsToday.stream().filter(m -> m.getType() == MealType.BREAKFAST).collect(Collectors.toList()).get(i);
+                confirmDelete(meal.getId(), meal.getFood().getName());
             });
 
             spinnerConsumedFood.show();
@@ -244,12 +227,9 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         foodLunchBtn.setOnClickListener(view -> {
             spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.LUNCH).map(m -> m.getFood().getName() + " (" + (int) (m.getQuantity() * m.getFood().getCalories()) + ")").collect(Collectors.toList())));
 
-            spinnerConsumedFood.setOnItemSelectListener(new OnItemSelectListener() {
-                @Override
-                public void setOnItemSelectListener(int i, @NotNull String s) {
-                    Meal meal = mealsToday.stream().filter(m -> m.getType() == MealType.LUNCH).collect(Collectors.toList()).get(i);
-                    confirmDelete(meal.getId(), meal.getFood().getName());
-                }
+            spinnerConsumedFood.setOnItemSelectListener((i, s) -> {
+                Meal meal = mealsToday.stream().filter(m -> m.getType() == MealType.LUNCH).collect(Collectors.toList()).get(i);
+                confirmDelete(meal.getId(), meal.getFood().getName());
             });
 
             spinnerConsumedFood.show();
@@ -258,12 +238,9 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         foodDinnerBtn.setOnClickListener(view -> {
             spinnerConsumedFood.setSpinnerListItems(new ArrayList<>(mealsToday.stream().filter(m -> m.getType() == MealType.DINNER).map(m -> m.getFood().getName() + " (" + (int) (m.getQuantity() * m.getFood().getCalories()) + ")").collect(Collectors.toList())));
 
-            spinnerConsumedFood.setOnItemSelectListener(new OnItemSelectListener() {
-                @Override
-                public void setOnItemSelectListener(int i, @NotNull String s) {
-                    Meal meal = mealsToday.stream().filter(m -> m.getType() == MealType.DINNER).collect(Collectors.toList()).get(i);
-                    confirmDelete(meal.getId(), meal.getFood().getName());
-                }
+            spinnerConsumedFood.setOnItemSelectListener((i, s) -> {
+                Meal meal = mealsToday.stream().filter(m -> m.getType() == MealType.DINNER).collect(Collectors.toList()).get(i);
+                confirmDelete(meal.getId(), meal.getFood().getName());
             });
 
             spinnerConsumedFood.show();
@@ -355,17 +332,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         AlertDialog dialog = new AlertDialog.Builder(view.getContext())
                 .setTitle("Remove a meal")
                 .setMessage("Do you want to remove this meal: " + foodName)
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        deleteMealRetrofit(mealId);
-                    }
-                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                }).create();
+                .setPositiveButton("YES", (dialogInterface, i) -> deleteMealRetrofit(mealId)).setNegativeButton("NO", (dialogInterface, i) -> dialogInterface.cancel()).create();
         dialog.show();
     }
 

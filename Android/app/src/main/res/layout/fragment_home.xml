@@ -34,6 +34,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"
+        android:text="Loading..."
         android:textSize="40sp" />
 
 
@@ -59,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/kcal_recommended_text"
             android:textColor="@color/black"
+            android:text=" 0"
             android:textSize="16sp" />
     </RelativeLayout>
 
@@ -84,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/kcal_consumed_text"
             android:textColor="@color/black"
+            android:text=" 0"
             android:textSize="16sp" />
     </RelativeLayout>
 
@@ -100,7 +103,7 @@
             android:id="@+id/kcal_consumed_protein"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Consumed kcal:"
+            android:text="0"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -108,7 +111,7 @@
             android:id="@+id/kcal_consumed_carbs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Consumed kcal:"
+            android:text="0:"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@id/kcal_consumed_protein"
@@ -119,7 +122,7 @@
             android:id="@+id/kcal_consumed_fat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Consumed kcal:"
+            android:text="0"
             android:layout_toEndOf="@id/kcal_consumed_carbs"
             android:textColor="@color/black"
             android:textSize="16sp" />

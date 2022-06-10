@@ -54,10 +54,10 @@ public class SettingsFragment extends Fragment {
 
     private void initUI() {
         caloriesText = view.findViewById(R.id.settings_calories);
-        caloriesText.setText("Calories needed: " + String.valueOf(user.getCaloriesNeeded()));
+        caloriesText.setText("Calories needed: " + user.getCaloriesNeeded());
 
         weightText = view.findViewById(R.id.settings_weight);
-        weightText.setText("Current weight: " + String.valueOf(user.getWeight()));
+        weightText.setText("Current weight: " + user.getWeight());
 
         firstNameText = view.findViewById(R.id.settings_first_name);
         firstNameText.setText("First name:" + user.getFirstName());
@@ -78,13 +78,9 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initListeners() {
-        progressBtn.setOnClickListener(view -> {
-            switchToProgress();
-        });
+        progressBtn.setOnClickListener(view -> switchToProgress());
 
-        graphsBtn.setOnClickListener(view -> {
-            switchToGraphs();
-        });
+        graphsBtn.setOnClickListener(view -> switchToGraphs());
 
         updateBtn.setOnClickListener(view -> {
             switchToCalories();

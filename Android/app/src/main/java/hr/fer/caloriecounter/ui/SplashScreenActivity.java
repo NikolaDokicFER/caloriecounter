@@ -23,16 +23,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         sharedPreferences = getPreferences(MODE_PRIVATE);
         boolean loggedIn = sharedPreferences.getBoolean("loggedIn", false);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (loggedIn) {
-                    Gson gson = new Gson();
-                    String json = sharedPreferences.getString("User", "");
-                    switchToHome(gson.fromJson(json, UserDetail.class));
-                } else {
-                    switchToLogin();
-                }
+        new Handler().postDelayed(() -> {
+            if (loggedIn) {
+                Gson gson = new Gson();
+                String json = sharedPreferences.getString("User", "");
+                switchToHome(gson.fromJson(json, UserDetail.class));
+            } else {
+                switchToLogin();
             }
         }, 1000);
 
