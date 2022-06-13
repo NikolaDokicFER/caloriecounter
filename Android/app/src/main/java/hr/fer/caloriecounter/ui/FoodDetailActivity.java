@@ -1,5 +1,7 @@
 package hr.fer.caloriecounter.ui;
 
+
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -20,7 +22,7 @@ import hr.fer.caloriecounter.model.Food;
 import hr.fer.caloriecounter.model.Meal;
 import hr.fer.caloriecounter.model.UserDetail;
 import hr.fer.caloriecounter.model.enums.MealType;
-import hr.fer.caloriecounter.sqlite.CalorieCounterDbHelper;
+import hr.fer.caloriecounter.sqlite.CalorieCounterFoodDbHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,7 +50,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     private Button addButton;
     private ImageButton favoriteButton;
     private boolean favorite = false;
-    private CalorieCounterDbHelper dbHelper;
+    private CalorieCounterFoodDbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         date = getIntent().getStringExtra("date");
         type = getIntent().getStringExtra("type");
 
-        dbHelper = new CalorieCounterDbHelper(this);
+        dbHelper = new CalorieCounterFoodDbHelper(this);
         Cursor cursor = dbHelper.fetchEntry(foodName);
         if (cursor.getCount() == 1) {
             cursor.moveToFirst();

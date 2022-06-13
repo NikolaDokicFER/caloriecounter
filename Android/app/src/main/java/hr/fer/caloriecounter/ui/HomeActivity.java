@@ -22,6 +22,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private HomeFragment homeFragment = new HomeFragment();
     private JournalFragment journalFragment = new JournalFragment();
     private SettingsFragment settingsFragment = new SettingsFragment();
+    private PlanFragment planFragment = new PlanFragment();
     private boolean updated = false;
 
     @Override
@@ -68,6 +69,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.icon_calendar:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_fragment, journalFragment).commit();
                 journalFragment.setArguments(bundle);
+                return true;
+
+            case R.id.icon_plan:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_fragment, planFragment).commit();
+                planFragment.setArguments(bundle);
                 return true;
 
             case R.id.icon_user:

@@ -33,7 +33,7 @@ import hr.fer.caloriecounter.model.Food;
 import hr.fer.caloriecounter.model.Meal;
 import hr.fer.caloriecounter.model.UserDetail;
 import hr.fer.caloriecounter.model.enums.MealType;
-import hr.fer.caloriecounter.sqlite.CalorieCounterDbHelper;
+import hr.fer.caloriecounter.sqlite.CalorieCounterFoodDbHelper;
 import lombok.NoArgsConstructor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,7 +66,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
     private int caloriesConsumedDinner;
     private SearchableSpinner spinnerAllFood;
     private SearchableSpinner spinnerConsumedFood;
-    private CalorieCounterDbHelper dbHelper;
+    private CalorieCounterFoodDbHelper dbHelper;
     private ArrayList<String> allFoodList;
     private ArrayList<String> faveFoodList;
 
@@ -90,7 +90,7 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         caloriesConsumedDinner = 0;
         mealsToday = new ArrayList<>();
 
-        dbHelper = new CalorieCounterDbHelper(getContext());
+        dbHelper = new CalorieCounterFoodDbHelper(getContext());
         allFoodList = new ArrayList<>();
         faveFoodList = new ArrayList<>();
         Cursor cursor = dbHelper.fetchEntries();
@@ -132,10 +132,12 @@ public class JournalFragment extends Fragment implements DatePickerFragment.IDat
         spinnerAllFood = new SearchableSpinner(view.getContext());
         spinnerAllFood.setSpinnerListItems(allFoodList);
         spinnerAllFood.setWindowTitle("Select a food to add");
+        spinnerAllFood.setShowKeyboardByDefault(false);
 
         spinnerConsumedFood = new SearchableSpinner(view.getContext());
         spinnerConsumedFood.setSearchViewVisibility(SearchableSpinner.SpinnerView.GONE);
         spinnerConsumedFood.setWindowTitle("Select a meal to remove");
+        spinnerConsumedFood.setShowKeyboardByDefault(false);
     }
 
     private void initListeners() {

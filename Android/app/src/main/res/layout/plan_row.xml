@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/plan_day_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="DAY"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <RelativeLayout
+        android:id="@+id/plan_relative1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/plan_day_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/plan_breakfast_btn"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:background="@drawable/custom_button_shape"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="BREAKFAST"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/plan_breakfast_add"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/plan_breakfast_btn"
+            android:background="@drawable/custom_button_shape"
+            android:foreground="?attr/selectableItemBackground"
+            android:src="@drawable/ic_add_white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/plan_relative2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/plan_relative1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/plan_lunch_btn"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:background="@drawable/custom_button_shape"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="LUNCH"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/plan_lunch_add"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/plan_lunch_btn"
+            android:background="@drawable/custom_button_shape"
+            android:foreground="?attr/selectableItemBackground"
+            android:src="@drawable/ic_add_white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/plan_relative3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/plan_relative2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp">
+
+        <Button
+            android:id="@+id/plan_dinner_btn"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:background="@drawable/custom_button_shape"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="DINNER"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/plan_dinner_add"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/plan_dinner_btn"
+            android:background="@drawable/custom_button_shape"
+            android:foreground="?attr/selectableItemBackground"
+            android:src="@drawable/ic_add_white" />
+    </RelativeLayout>
+
+</RelativeLayout>

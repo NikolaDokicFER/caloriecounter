@@ -10,8 +10,8 @@ import androidx.annotation.Nullable;
 
 import hr.fer.caloriecounter.model.Food;
 
-public class CalorieCounterDbHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "CalorieCounter.db";
+public class CalorieCounterFoodDbHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "CalorieCounterFood.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "food";
@@ -28,7 +28,7 @@ public class CalorieCounterDbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NAME_CALCIUM = "calcium";
     private static final String COLUMN_NAME_IRON = "iron";
 
-    public CalorieCounterDbHelper(@Nullable Context context) {
+    public CalorieCounterFoodDbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

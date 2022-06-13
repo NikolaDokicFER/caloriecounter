@@ -23,12 +23,12 @@ import hr.fer.caloriecounter.NetworkClient;
 import hr.fer.caloriecounter.R;
 import hr.fer.caloriecounter.model.Progress;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
+public class RecyclerAdapterProgress extends RecyclerView.Adapter<RecyclerAdapterProgress.RecyclerViewHolder> {
     private Context ctx;
     private List<Progress> progressList;
     private Dialog dialog;
 
-    public RecyclerAdapter(Context ctx) {
+    public RecyclerAdapterProgress(Context ctx) {
         this.ctx = ctx;
     }
 
@@ -41,7 +41,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @NonNull
     @NotNull
     @Override
-    public RecyclerAdapter.RecyclerViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public RecyclerAdapterProgress.RecyclerViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(R.layout.progress_row, parent, false);
 
@@ -49,7 +49,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull RecyclerAdapter.RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull RecyclerAdapterProgress.RecyclerViewHolder holder, int position) {
         holder.dateText.setText("Date: " + progressList.get(position).getDate());
         holder.weightText.setText("Weight: " + progressList.get(position).getWeight() + "kg");
 

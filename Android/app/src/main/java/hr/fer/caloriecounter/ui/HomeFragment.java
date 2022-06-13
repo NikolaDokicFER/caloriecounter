@@ -35,12 +35,13 @@ import hr.fer.caloriecounter.model.Food;
 import hr.fer.caloriecounter.model.Meal;
 import hr.fer.caloriecounter.model.UserDetail;
 import hr.fer.caloriecounter.model.enums.MealType;
-import hr.fer.caloriecounter.sqlite.CalorieCounterDbHelper;
+import hr.fer.caloriecounter.sqlite.CalorieCounterFoodDbHelper;
 import lombok.NoArgsConstructor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 
 @NoArgsConstructor
@@ -75,7 +76,7 @@ public class HomeFragment extends Fragment {
     private int consumedCarbs;
     private SearchableSpinner spinnerAllFood;
     private SearchableSpinner spinnerConsumedFood;
-    private CalorieCounterDbHelper dbHelper;
+    private CalorieCounterFoodDbHelper dbHelper;
     private ArrayList<String> allFoodList;
 
     @Override
@@ -101,7 +102,7 @@ public class HomeFragment extends Fragment {
         consumedProtein = 0;
         mealsToday = new ArrayList<>();
 
-        dbHelper = new CalorieCounterDbHelper(getContext());
+        dbHelper = new CalorieCounterFoodDbHelper(getContext());
         allFoodList = new ArrayList<>();
         Cursor cursor = dbHelper.fetchEntries();
 
@@ -161,10 +162,12 @@ public class HomeFragment extends Fragment {
         spinnerAllFood = new SearchableSpinner(view.getContext());
         spinnerAllFood.setSpinnerListItems(allFoodList);
         spinnerAllFood.setWindowTitle("Select consumed food");
+        spinnerAllFood.setShowKeyboardByDefault(false);
 
         spinnerConsumedFood = new SearchableSpinner(view.getContext());
         spinnerConsumedFood.setSearchViewVisibility(SearchableSpinner.SpinnerView.GONE);
         spinnerConsumedFood.setWindowTitle("Select a meal to remove");
+        spinnerConsumedFood.setShowKeyboardByDefault(false);
     }
 
     private void initListeners() {
@@ -180,6 +183,7 @@ public class HomeFragment extends Fragment {
                 switchActivity.putExtra("type", "BREAKFAST");
                 startActivity(switchActivity);
             });
+
             spinnerAllFood.show();
         });
 

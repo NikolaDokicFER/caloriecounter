@@ -40,7 +40,7 @@ import retrofit2.Retrofit;
 public class ProgressActivity extends AppCompatActivity implements DatePickerFragment.IDateSetListener {
     private UserDetail user;
     private RecyclerView recyclerView;
-    private RecyclerAdapter recyclerAdapter;
+    private RecyclerAdapterProgress recyclerAdapterProgress;
     private ImageButton addButton;
     private Dialog dialog;
     private File imageFile;
@@ -64,9 +64,9 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
         addButton = findViewById(R.id.progress_add_button);
 
         recyclerView = findViewById(R.id.progress_recycler_view);
-        recyclerAdapter = new RecyclerAdapter(this);
+        recyclerAdapterProgress = new RecyclerAdapterProgress(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setAdapter(recyclerAdapterProgress);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
     }
@@ -127,8 +127,8 @@ public class ProgressActivity extends AppCompatActivity implements DatePickerFra
             @Override
             public void onResponse(Call<List<Progress>> call, Response<List<Progress>> response) {
                 if (response.code() == 200) {
-                    recyclerAdapter.setProgress(response.body());
-                    recyclerView.setAdapter(recyclerAdapter);
+                    recyclerAdapterProgress.setProgress(response.body());
+                    recyclerView.setAdapter(recyclerAdapterProgress);
                 } else {
                     System.out.println(response.code());
                 }

@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:backgroundTint="@color/white"
         android:src="@drawable/ic_favorite_empty" />
 
@@ -248,7 +248,8 @@
             android:id="@+id/food_qunatity_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quantity consumed (in grams): "
+            android:gravity="center"
+            android:text="Quantity consumed: \n(in grams or milliliters)"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -256,13 +257,13 @@
             android:id="@+id/food_quantity"
             android:layout_width="100dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/food_qunatity_text"
             android:background="@color/green_main"
-            android:hint="g"
+            android:hint="g\\ml"
             android:imeOptions="actionDone"
             android:inputType="number"
             android:maxLines="1"
-
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textColorHint="@color/black" />
