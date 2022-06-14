@@ -1,7 +1,5 @@
 package hr.fer.caloriecounter.ui;
 
-
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -103,13 +101,13 @@ public class FoodDetailActivity extends AppCompatActivity {
         caloriesText.setText("Calories: " + food.getCalories());
 
         carbsText = findViewById(R.id.food_carbs);
-        carbsText.setText("Carbs:\n" + food.getCarbohydrates());
+        carbsText.setText("Carbs:\n  " + food.getCarbohydrates());
 
         fatText = findViewById(R.id.food_fat);
         fatText.setText("Fat\n" + food.getFat());
 
         proteinText = findViewById(R.id.food_protein);
-        proteinText.setText("Protein\n" + food.getProteins());
+        proteinText.setText("Protein\n   " + food.getProteins());
 
         vitaminAText = findViewById(R.id.food_vitamin_a);
         vitaminAText.setText(String.valueOf(food.getVitaminA()));

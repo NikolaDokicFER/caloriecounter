@@ -1,5 +1,6 @@
 package hr.fer.caloriecounter.ui;
 
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -41,7 +42,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
 
 
 @NoArgsConstructor
@@ -183,7 +183,6 @@ public class HomeFragment extends Fragment {
                 switchActivity.putExtra("type", "BREAKFAST");
                 startActivity(switchActivity);
             });
-
             spinnerAllFood.show();
         });
 

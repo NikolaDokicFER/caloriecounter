@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="Create your own meal plan"
+        android:gravity="center"
+        android:text="Create your own meal plan \nfor the week"
         android:textColor="@color/black"
         android:textSize="22sp" />
 

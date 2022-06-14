@@ -48,7 +48,7 @@
             android:id="@+id/kcal_consumed_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Consumed kcal:"
+            android:text="Consumed kcal: "
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -97,7 +97,7 @@
         android:layout_below="@id/home_relative3"
         android:backgroundTint="@color/white"
         android:layout_centerHorizontal="true"
-        android:text="See consumed food"
+        android:text="Show consumed food"
         android:textColor="#03c6fc"/>
 
     <RelativeLayout
@@ -136,7 +136,7 @@
         android:layout_below="@id/home_relative4"
         android:backgroundTint="@color/white"
         android:layout_centerHorizontal="true"
-        android:text="See consumed food"
+        android:text="Show consumed food"
         android:textColor="#03c6fc"/>
 
     <RelativeLayout
@@ -174,7 +174,7 @@
         android:layout_below="@id/home_relative5"
         android:backgroundTint="@color/white"
         android:layout_centerHorizontal="true"
-        android:text="See consumed food"
+        android:text="Show consumed food"
         android:textColor="#03c6fc"/>
 
 </RelativeLayout>
